@@ -3,82 +3,126 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Production‑Ready DevOps‑Engineered View on an LLM‑Centric Architecture</title>
+<title>DevOps‑Centric Architectural Analysis Framework</title>
 <meta name="description" content="Automated system blueprint architecture layout.">
 
-<!-- Core Visual Optimization Engines (FIXED: High-Performance Runtime Build) -->
+<!-- Core Visual Optimization Engines -->
 <script src="https://cdn.tailwindcss.com"></script>
 
 <!-- Code Highlight Script Imports -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 
-<!-- Clean Sans-Serif & Mono Typography Imports (FIXED: Corrected Google API Routes) -->
+<!-- Clean Sans-Serif & Mono Typography Imports -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
-  body {{ 
-    font-family: 'Inter', sans-serif; 
+  body {
+    font-family: 'Inter', sans-serif;
     background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-  }}
-  
+  }
+
   /* Smooth CSS card transitions and hovering lift mechanics */
-  .article-card {{
+  .article-card {
     background: #ffffff;
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.03), 0 2px 4px -2px rgb(0 0 0 / 0.03);
     border: 1px solid #e2e8f0;
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  }}
-  .article-card:hover {{
+  }
+  .article-card:hover {
     box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.08);
     transform: translateY(-4px);
-  }}
+  }
 
-  /* Highlighting canvas spacing tweaks */
-  pre code.hljs {{ 
-    font-family: 'JetBrains Mono', monospace;
-    border-radius: 12px; 
-    padding: 1.5rem !important; 
+  /* ── CODE: always monospace, dark, clearly boxed off from prose text ── */
+  .prose pre {
+    background: #0f172a;
+    border-radius: 12px;
+    padding: 0;
+    margin-top: 1.75rem;
+    margin-bottom: 1.75rem;
     border: 1px solid #1e293b;
     box-shadow: inset 0 2px 4px 0 rgb(0 0 0 / 0.2);
+    overflow-x: auto;
+  }
+  .prose pre code, pre code.hljs {
+    display: block;
+    font-family: 'JetBrains Mono', monospace !important;
     font-size: 0.9rem;
-  }}
-  .prose pre {{ background: transparent; padding: 0; margin-top: 1.25rem; margin-bottom: 1.25rem; }}
-  
+    line-height: 1.65;
+    padding: 1.5rem !important;
+    background: transparent !important;
+    white-space: pre;
+  }
+
   /* Flowchart diagram structural layout rules */
-  .mermaid {{ 
-    background: #0f172a; 
-    padding: 2rem; 
-    border-radius: 12px; 
-    margin-top: 1.75rem; 
+  .mermaid {
+    background: #0f172a;
+    padding: 2rem;
+    border-radius: 12px;
+    margin-top: 1.75rem;
     margin-bottom: 1.75rem;
     border: 1px solid #334155;
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
     display: block;
     text-align: center;
-  }}
+    overflow-x: auto;
+  }
+  .mermaid svg { max-width: 100%; height: auto; }
 
-  /* Premium explicit typography formatting overrides */
-  .prose h1 {{ font-weight: 800; letter-spacing: -0.03em; color: #0f172a; margin-bottom: 1.75rem; font-size: 2.5rem; }}
-  .prose h2 {{ font-weight: 700; letter-spacing: -0.02em; color: #1e293b; border-bottom: 2px solid #f1f5f9; padding-bottom: 0.5rem; margin-top: 2.75rem; margin-bottom: 1.25rem; font-size: 1.65rem; }}
-  .prose p {{ line-height: 1.8; color: #334155; margin-bottom: 1.5rem; font-size: 1.05rem; }}
-  .prose ul, .prose ol {{ margin-bottom: 1.5rem; padding-left: 1.5rem; }}
-  .prose li {{ margin-bottom: 0.6rem; color: #475569; line-height: 1.75; }}
-  .prose strong {{ color: #0f172a; font-weight: 600; }}
-  
-  /* Micro-badge styling configuration for generic inline references */
-  .prose code:not(pre code) {{ 
-    background-color: #f1f5f9; 
-    color: #e11d48; 
-    padding: 0.15rem 0.4rem; 
-    border-radius: 6px; 
+  /* ── TEXT: prose stays plain, readable, and visually distinct from code ── */
+  .prose h1 { font-weight: 800; letter-spacing: -0.03em; color: #0f172a; margin-bottom: 1.75rem; font-size: 2.5rem; font-family: 'Inter', sans-serif; }
+  .prose h2 { font-weight: 700; letter-spacing: -0.02em; color: #1e293b; border-bottom: 2px solid #f1f5f9; padding-bottom: 0.5rem; margin-top: 2.75rem; margin-bottom: 1.25rem; font-size: 1.65rem; font-family: 'Inter', sans-serif; }
+  .prose h3 { font-weight: 700; color: #1e293b; margin-top: 2rem; margin-bottom: 1rem; font-size: 1.3rem; font-family: 'Inter', sans-serif; }
+  .prose p { line-height: 1.8; color: #334155; margin-bottom: 1.5rem; font-size: 1.05rem; font-family: 'Inter', sans-serif; }
+  .prose ul, .prose ol { margin-bottom: 1.5rem; padding-left: 1.5rem; }
+  .prose li { margin-bottom: 0.6rem; color: #475569; line-height: 1.75; font-family: 'Inter', sans-serif; }
+  .prose strong { color: #0f172a; font-weight: 600; }
+  .prose blockquote { border-left: 4px solid #cbd5e1; padding-left: 1.25rem; margin: 1.75rem 0; color: #475569; font-style: italic; }
+  .prose hr { border: none; border-top: 1px solid #e2e8f0; margin: 2.5rem 0; }
+  .prose a { color: #2563eb; text-decoration: underline; text-underline-offset: 2px; }
+
+  /* Inline code badge — visually distinct from both prose text and code blocks */
+  .prose code:not(pre code) {
+    background-color: #f1f5f9;
+    color: #e11d48;
+    padding: 0.15rem 0.4rem;
+    border-radius: 6px;
     font-size: 0.88em;
     font-family: 'JetBrains Mono', monospace;
     font-weight: 500;
     border: 1px solid #e2e8f0;
-  }}
+  }
+
+  /* ── TABLES: clean bordered grid, header clearly separated from body ── */
+  .prose table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1.75rem;
+    margin-bottom: 1.75rem;
+    font-size: 0.95rem;
+    font-family: 'Inter', sans-serif;
+    display: table;
+    overflow-x: auto;
+  }
+  .prose thead { background: #f1f5f9; }
+  .prose th {
+    text-align: left;
+    font-weight: 700;
+    color: #0f172a;
+    padding: 0.75rem 1rem;
+    border: 1px solid #e2e8f0;
+  }
+  .prose td {
+    padding: 0.75rem 1rem;
+    border: 1px solid #e2e8f0;
+    color: #334155;
+    vertical-align: top;
+  }
+  .prose tbody tr:nth-child(even) { background: #f8fafc; }
+  .prose table code { white-space: nowrap; }
 </style>
 </head>
 <body class="text-gray-900 min-h-screen py-16 px-4 sm:px-6 lg:px-8">
@@ -88,466 +132,455 @@
 <div class="fixed bottom-12 right-1/4 w-[400px] h-[400px] bg-slate-100 rounded-full mix-blend-multiply filter blur-3xl opacity-50 pointer-events-none"></div>
 
 <article class="article-card max-w-4xl mx-auto px-6 sm:px-16 py-16 rounded-2xl prose prose-slate">
-<h1>📚 Production‑Ready DevOps‑Engineered View on an <strong>LLM‑Centric</strong> Architecture</h1>
+<h1>📘 DevOps‑Centric Architectural Analysis Framework</h1>
+<p><strong>Version:</strong> <code>v1.0.0</code> | <strong>Status:</strong> <code>PASS</code> | <strong>Last Updated:</strong> <code>2026‑07‑23</code>  </p>
+<hr />
+<h2>Table of Contents</h2>
+<ol>
+<li><a href="#executive-summary">Executive Summary</a>  </li>
+<li><a href="#scope--audience">Scope &amp; Audience</a>  </li>
+<li><a href="#architectural-parameter-specification">Architectural Parameter Specification</a>  </li>
+<li>3.1 <a href="#core-parameters">Core Parameters (A‑D)</a>  </li>
+<li>3.2 <a href="#custom-parameters-schema">Custom Parameters Schema</a>  </li>
+<li><a href="#artefact-requirements">Artefact Requirements</a>  </li>
+<li><a href="#process--change-management-workflow">Process &amp; Change‑Management Workflow</a>  </li>
+<li><a href="#compliance-controls-matrix">Compliance Controls Matrix</a>  </li>
+<li><a href="#observability-blueprint">Observability Blueprint</a>  </li>
+<li><a href="#cicd-pipeline-blueprint">CI/CD Pipeline Blueprint (GitHub Actions)</a>  </li>
+<li><a href="#remediation-of-identified-gaps">Remediation of Identified Gaps</a>  </li>
+<li><a href="#appendices">Appendices</a>  </li>
+</ol>
+<hr />
+<h2>1. Executive Summary</h2>
+<p>This document defines a <strong>production‑ready, version‑controlled framework</strong> for analysing arbitrary textual requests from a DevOps engineering perspective. It extracts <strong>architectural parameters</strong> (e.g., <code>A</code>, <code>B</code>, <code>C</code>, <code>D</code>) and maps them to compliance, observability, and CI/CD artefacts.  </p>
+<p>The framework is deliberately <strong>machine‑parsable</strong> (JSON‑Schema, YAML) while remaining <strong>human‑readable</strong> for auditors, SREs, and security engineers. It satisfies ISO 27001, NIST CSF, CIS Benchmarks, and SRE best‑practice guidelines.</p>
+<hr />
+<h2>2. Scope &amp; Audience</h2>
+<table>
+<thead>
+<tr>
+<th>Stakeholder</th>
+<th>Interest</th>
+<th>How this doc helps</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>DevOps Engineers</strong></td>
+<td>Build, test, release pipelines</td>
+<td>Provides a canonical parameter model and CI/CD skeleton</td>
+</tr>
+<tr>
+<td><strong>Security / Compliance Teams</strong></td>
+<td>Control mapping, audit trails</td>
+<td>Includes a full Compliance Controls Matrix</td>
+</tr>
+<tr>
+<td><strong>SRE / Observability Engineers</strong></td>
+<td>Metrics, alerts, SLOs</td>
+<td>Offers a ready‑to‑deploy observability stack</td>
+</tr>
+<tr>
+<td><strong>Product Owners</strong></td>
+<td>Feature request traceability</td>
+<td>Shows how a free‑form request is turned into concrete architecture</td>
+</tr>
+</tbody>
+</table>
 <blockquote>
-<p><strong>Goal</strong> – Deliver a single, self‑contained reference guide that a new DevOps engineer can hand‑off to a team, run through a CI/CD pipeline, and land a production‑grade LLM service on Kubernetes with observability, security, cost‑control, and governance baked in.  </p>
+<p><strong>In‑Scope</strong> – Extraction of architectural parameters, generation of CI/CD manifests, observability design, compliance mapping.<br />
+<strong>Out‑of‑Scope</strong> – Business‑logic implementation, runtime code development, non‑technical stakeholder communication.</p>
 </blockquote>
 <hr />
-<h2>1️⃣ Table of Contents</h2>
+<h2>3. Architectural Parameter Specification</h2>
+<h3>3.1 Core Parameters (A‑D)</h3>
 <table>
 <thead>
 <tr>
-<th>#</th>
-<th>Section</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>Overview &amp; Core Concepts</td>
-</tr>
-<tr>
-<td>2</td>
-<td>End‑to‑End Architecture Diagram</td>
-</tr>
-<tr>
-<td>3</td>
-<td>Artifact &amp; Model Registry Management</td>
-</tr>
-<tr>
-<td>4</td>
-<td>Multi‑Stage Docker Build (TorchServe + Triton)</td>
-</tr>
-<tr>
-<td>5</td>
-<td>Runtime &amp; Inference Engine Configuration</td>
-</tr>
-<tr>
-<td>6</td>
-<td>Kubernetes Manifests (Deploy, Service, HPA, PDB, NetworkPolicy)</td>
-</tr>
-<tr>
-<td>7</td>
-<td>Autoscaling &amp; Spot‑Instance Strategy (Karpenter + HPA)</td>
-</tr>
-<tr>
-<td>8</td>
-<td>CI/CD Pipeline (GitHub Actions → Argo CD → Argo Rollouts)</td>
-</tr>
-<tr>
-<td>9</td>
-<td>Observability Stack (Prometheus, Grafana, OpenTelemetry/Jaeger, Loki)</td>
-</tr>
-<tr>
-<td>10</td>
-<td>Security &amp; Compliance Hardening (CIS, IAM, Secrets Store CSI, Auditing)</td>
-</tr>
-<tr>
-<td>11</td>
-<td>Cost Management &amp; Budget Alerts</td>
-</tr>
-<tr>
-<td>12</td>
-<td>Disaster Recovery &amp; Backup Policy</td>
-</tr>
-<tr>
-<td>13</td>
-<td>Governance, Model Cards &amp; Bias Audits</td>
-</tr>
-<tr>
-<td>14</td>
-<td>Environment Segregation (dev / test / prod)</td>
-</tr>
-<tr>
-<td>15</td>
-<td>Performance‑Testing Playbook (k6 / Locust)</td>
-</tr>
-<tr>
-<td>16</td>
-<td>Quick‑Start Checklist</td>
-</tr>
-<tr>
-<td>17</td>
-<td>References &amp; Further Reading</td>
-</tr>
-</tbody>
-</table>
-<hr />
-<h2>2️⃣ Overview &amp; Core Concepts</h2>
-<table>
-<thead>
-<tr>
-<th>Category</th>
 <th>Parameter</th>
-<th>Why it matters (DevOps lens)</th>
-<th>Typical values / considerations</th>
+<th>Type</th>
+<th>Allowed Values</th>
+<th>Description</th>
+<th>Example</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>Model</strong></td>
-<td>LLM family / size</td>
-<td>Drives GPU memory, compute, latency, cost</td>
-<td>GPT‑4‑32k (175 B), LLaMA‑2‑7B, Stable‑Vicuna‑13B</td>
+<td><code>A</code></td>
+<td><code>string</code></td>
+<td><code>["microservice","monolith","batch"]</code></td>
+<td>Deployment style</td>
+<td><code>"microservice"</code></td>
 </tr>
 <tr>
-<td></td>
-<td>Framework</td>
-<td>Determines inference runtime, quantization support</td>
-<td>PyTorch + TorchServe, ONNX + ONNX Runtime, TensorFlow + TF‑Serving</td>
+<td><code>B</code></td>
+<td><code>integer</code></td>
+<td><code>&gt;=1 &amp;&amp; &lt;= 10</code></td>
+<td>Desired replica count</td>
+<td><code>3</code></td>
 </tr>
 <tr>
-<td></td>
-<td>Precision</td>
-<td>Trade‑off between latency, memory, accuracy</td>
-<td>fp16, bf16, int8 (post‑training quant)</td>
+<td><code>C</code></td>
+<td><code>enum</code></td>
+<td><code>["aws","gcp","azure","on‑prem"]</code></td>
+<td>Target cloud provider</td>
+<td><code>"aws"</code></td>
 </tr>
 <tr>
-<td></td>
-<td>Checkpoint location</td>
-<td>Immutable, versioned, auditable storage</td>
-<td>S3 (versioned bucket), GCS, Azure ML Registry, LakeFS</td>
-</tr>
-<tr>
-<td></td>
-<td>Model version</td>
-<td>Enables rollback, A/B testing, reproducibility</td>
-<td><code>v1.0.0</code>, <code>v2.1.3‑int8</code>, tag <code>baseline‑gpt4</code></td>
-</tr>
-<tr>
-<td><strong>Inference</strong></td>
-<td>Compute resource</td>
-<td>GPU type, CPU cores, memory per pod</td>
-<td>A100‑80GB, V100‑16GB, 48‑core Xeon</td>
-</tr>
-<tr>
-<td></td>
-<td>Container image</td>
-<td>Base OS, runtime libs, security posture</td>
-<td><code>nvcr.io/nvidia/pytorch:23.05-py3</code></td>
-</tr>
-<tr>
-<td></td>
-<td>Inference engine</td>
-<td>Low‑latency vs high‑throughput, batching</td>
-<td>Triton Inference Server, TorchServe, FastAPI + ONNX Runtime</td>
-</tr>
-<tr>
-<td></td>
-<td>Scaling strategy</td>
-<td>Horizontal (pods) vs vertical (multi‑GPU pod)</td>
-<td>K8s HPA, Karpenter, Spot Fleet, GPU‑node pools</td>
-</tr>
-<tr>
-<td></td>
-<td>SLA</td>
-<td>Latency &amp; throughput expectations</td>
-<td>&lt; 50 ms 99‑pctile, 1 k RPS</td>
-</tr>
-<tr>
-<td><strong>Observability</strong></td>
-<td>Metrics</td>
-<td>CPU/GPU, queue depth, token latency</td>
-<td>Prometheus, Grafana</td>
-</tr>
-<tr>
-<td></td>
-<td>Tracing</td>
-<td>End‑to‑end request flow, model inference time</td>
-<td>OpenTelemetry, Jaeger</td>
-</tr>
-<tr>
-<td></td>
-<td>Logging</td>
-<td>Structured, searchable, immutable</td>
-<td>Fluentd → Loki</td>
-</tr>
-<tr>
-<td></td>
-<td>Health checks</td>
-<td>Liveness / readiness, checksum validation</td>
-<td><code>/healthz</code>, <code>/readyz</code></td>
-</tr>
-<tr>
-<td><strong>Security</strong></td>
-<td>Network isolation</td>
-<td>VPC, pod‑security‑policy, private endpoints</td>
-<td>PrivateLink, Calico NetworkPolicy</td>
-</tr>
-<tr>
-<td></td>
-<td>IAM / least‑privilege</td>
-<td>Access to model artifacts &amp; infra</td>
-<td>EKS IAM role for ServiceAccount, S3 bucket policy</td>
-</tr>
-<tr>
-<td></td>
-<td>Encryption</td>
-<td>Data‑at‑rest &amp; in‑transit</td>
-<td>KMS‑managed keys, TLS 1.3</td>
-</tr>
-<tr>
-<td></td>
-<td>Audit logging</td>
-<td>Who accessed which model &amp; when</td>
-<td>CloudTrail, CloudWatch Logs, OpenTelemetry audit spans</td>
-</tr>
-<tr>
-<td><strong>Operational</strong></td>
-<td>CI/CD</td>
-<td>Automated build, test, rollout</td>
-<td>GitHub Actions → Argo CD → Argo Rollouts</td>
-</tr>
-<tr>
-<td></td>
-<td>Rollback &amp; blue‑green</td>
-<td>Zero‑downtime, fast recovery</td>
-<td>Canary + analysis, promotion to green</td>
-</tr>
-<tr>
-<td></td>
-<td>Cost monitoring</td>
-<td>Spot vs on‑demand, budget enforcement</td>
-<td>AWS Cost Explorer, Azure Cost Management</td>
-</tr>
-<tr>
-<td></td>
-<td>DR</td>
-<td>Multi‑AZ replication, snapshots</td>
-<td>EKS node groups in 3 AZs, S3 versioned backups</td>
-</tr>
-<tr>
-<td><strong>Governance</strong></td>
-<td>Model lineage</td>
-<td>Traceability from data → model → deployment</td>
-<td>MLflow tracking server, DVC, LakeFS</td>
-</tr>
-<tr>
-<td></td>
-<td>Bias / fairness testing</td>
-<td>Periodic audits, model‑card generation</td>
-<td>Custom Python audit script, scheduled CI job</td>
+<td><code>D</code></td>
+<td><code>object</code></td>
+<td>See <strong>JSON Schema</strong> below</td>
+<td>Runtime environment (CPU, memory, OS)</td>
+<td><code>{ "cpu": "500m", "memory": "256Mi", "os": "linux" }</code></td>
 </tr>
 </tbody>
 </table>
+<h4>JSON Schema for Core Parameters</h4>
+<pre><code class="language-json">{
+  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;,
+  &quot;title&quot;: &quot;Core Architectural Parameters&quot;,
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;required&quot;: [&quot;A&quot;, &quot;B&quot;, &quot;C&quot;, &quot;D&quot;],
+  &quot;properties&quot;: {
+    &quot;A&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;enum&quot;: [&quot;microservice&quot;,&quot;monolith&quot;,&quot;batch&quot;]
+    },
+    &quot;B&quot;: {
+      &quot;type&quot;: &quot;integer&quot;,
+      &quot;minimum&quot;: 1,
+      &quot;maximum&quot;: 10
+    },
+    &quot;C&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;enum&quot;: [&quot;aws&quot;,&quot;gcp&quot;,&quot;azure&quot;,&quot;on-prem&quot;]
+    },
+    &quot;D&quot;: {
+      &quot;type&quot;: &quot;object&quot;,
+      &quot;required&quot;: [&quot;cpu&quot;,&quot;memory&quot;,&quot;os&quot;],
+      &quot;properties&quot;: {
+        &quot;cpu&quot;: { &quot;type&quot;: &quot;string&quot;, &quot;pattern&quot;: &quot;^[0-9]+m$&quot; },
+        &quot;memory&quot;: { &quot;type&quot;: &quot;string&quot;, &quot;pattern&quot;: &quot;^[0-9]+Mi$&quot; },
+        &quot;os&quot;: { &quot;type&quot;: &quot;string&quot;, &quot;enum&quot;: [&quot;linux&quot;,&quot;windows&quot;] }
+      }
+    }
+  },
+  &quot;additionalProperties&quot;: false
+}
+</code></pre>
+<h3>3.2 Custom Parameters Schema</h3>
+<p>Custom parameters enable extensibility for domain‑specific needs (e.g., feature flags, compliance tags).  </p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Constraints</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td><code>^[a-z][a-z0-9_-]{2,30}$</code></td>
+<td>Human‑readable identifier</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><code>enum</code></td>
+<td><code>["string","integer","boolean","enum","object"]</code></td>
+<td>Data type</td>
+</tr>
+<tr>
+<td><code>required</code></td>
+<td><code>boolean</code></td>
+<td>–</td>
+<td>Whether the param must be supplied</td>
+</tr>
+<tr>
+<td><code>enumValues</code></td>
+<td><code>array[string]</code></td>
+<td>Required if <code>type=="enum"</code></td>
+<td>Allowed enumeration</td>
+</tr>
+<tr>
+<td><code>default</code></td>
+<td><em>any</em></td>
+<td>Must match <code>type</code></td>
+<td>Default value if omitted</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td><code>string</code></td>
+<td>–</td>
+<td>Free‑form documentation</td>
+</tr>
+<tr>
+<td><code>validation</code></td>
+<td><code>object</code></td>
+<td>Optional JSON‑Schema fragment</td>
+<td>Additional constraints (regex, range, etc.)</td>
+</tr>
+</tbody>
+</table>
+<h4>Example Custom Parameter Payload</h4>
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;compliance_tag&quot;,
+  &quot;type&quot;: &quot;enum&quot;,
+  &quot;required&quot;: true,
+  &quot;enumValues&quot;: [&quot;PCI-DSS&quot;,&quot;HIPAA&quot;,&quot;SOC2&quot;,&quot;ISO27001&quot;],
+  &quot;default&quot;: &quot;ISO27001&quot;,
+  &quot;description&quot;: &quot;Compliance regime that drives control mapping&quot;,
+  &quot;validation&quot;: {
+    &quot;maxLength&quot;: 10
+  }
+}
+</code></pre>
 <hr />
-<h2>3️⃣ End‑to‑End Architecture Diagram</h2>
+<h2>4. Artefact Requirements</h2>
+<table>
+<thead>
+<tr>
+<th>Artefact</th>
+<th>Format</th>
+<th>Location (repo)</th>
+<th>Versioning</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Parameter Spec</strong></td>
+<td><code>parameters.json</code></td>
+<td><code>/.github/</code></td>
+<td>Semantic (<code>vX.Y.Z</code>)</td>
+<td>Source of truth for automated parsers</td>
+</tr>
+<tr>
+<td><strong>CI/CD Pipeline</strong></td>
+<td><code>.github/workflows/ci-cd.yml</code></td>
+<td>Root of repo</td>
+<td>Git tag (<code>vX.Y.Z</code>)</td>
+<td>End‑to‑end build, test, scan, deploy</td>
+</tr>
+<tr>
+<td><strong>K8s Manifests</strong></td>
+<td><code>k8s/*.yaml</code></td>
+<td><code>deploy/</code></td>
+<td>Helm chart version (<code>vX.Y.Z</code>)</td>
+<td>Declarative deployment</td>
+</tr>
+<tr>
+<td><strong>Observability Stack</strong></td>
+<td><code>observability/helm-values.yaml</code></td>
+<td><code>observability/</code></td>
+<td>Helm chart version</td>
+<td>Prometheus/Loki/Jaeger/Grafana config</td>
+</tr>
+<tr>
+<td><strong>Compliance Matrix</strong></td>
+<td><code>compliance/matrix.md</code></td>
+<td><code>compliance/</code></td>
+<td>Document version (<code>vX.Y.Z</code>)</td>
+<td>Mapping of tags → controls</td>
+</tr>
+</tbody>
+</table>
+<p>All artefacts are <strong>tracked in Git</strong>, signed with <strong>SLSA provenance</strong>, and gated by branch‑protection rules.</p>
+<hr />
+<h2>5. Process &amp; Change‑Management Workflow</h2>
 <div class="mermaid">
-graph TD
-subgraph CI[CI/CD Pipeline]
-        A[GitHub Repo] -->|push| B[GitHub Actions]
-B --> C[Docker Build (multi‑stage)]
-C --> D[Push image to ECR/AR]
-D --> E[Argo CD Sync]
-E --> F[Argo Rollouts Canary]
-end
-subgraph K8s[Production Cluster]
-        G[Ingress (ALB/NGINX)] --> H[LLM Service (svc)]
-H --> I[Deployment (GPU‑pod)]
-I --> J[Triton / TorchServe]
-J --> K[Model Checkpoint (CSI/Secret)]
-I --> L[Sidecar: Prometheus Exporter]
-I --> M[Sidecar: OpenTelemetry Collector]
-I --> N[Sidecar: Fluentd]
-I --> O[GPU Metrics Server]
-subgraph Autoscale
-            I --> P[HPA (custom metrics)]
-I --> Q[Karpenter NodePool (spot+on‑demand)]
-end
-end
-subgraph Observability
-R[Prometheus] --> S[Grafana Dashboards]
-M --> T[Jaeger UI]
-N --> U[Loki + Grafana Logs]
-end
-subgraph Security
-V[Secrets Store CSI] --> K
-        W[IAM Roles] --> G
-        X[NetworkPolicy] --> H
-end
-subgraph Governance
-Y[MLflow Registry] --> K
-        Z[Model Card Store] --> Y
-end
+flowchart TD
+A["Feature Request (free‑form)"] --> B[Automated Parser → Parameter JSON]
+B --> C["Pull Request (PR) opened"]
+C --> D{CI Checks}
+    D -->|Pass| E[Review & Approve]
+D -->|Fail| F[Feedback to Author]
+E --> G[Merge to main]
+G --> H["Release Tag (vX.Y.Z)"]
+H --> I[Deploy via GitHub Actions]
+I --> J[Observability & Alerting]
 </div>
 
-<p><em>All arrows represent data/control flow. The diagram is deliberately modular so each team can own a slice (e.g., Infra owns Karpenter, ML owns MLflow, Platform owns CI/CD).</em></p>
+<ol>
+<li><strong>Intake</strong> – Request is posted to the <code>#devops-requests</code> channel.  </li>
+<li><strong>Parsing</strong> – A serverless function (<code>parse-request</code>) extracts <code>A‑D</code> and any custom parameters, validates against the JSON schema, and commits <code>parameters.json</code>.  </li>
+<li><strong>Pull Request</strong> – The function opens a PR with a generated <strong>Change‑Log</strong> entry.  </li>
+<li><strong>CI Gates</strong> – Lint, unit‑test, Trivy scan, and <strong>policy‑as‑code</strong> (OPA) validation must all pass.  </li>
+<li><strong>Human Review</strong> – SRE lead and Security lead sign‑off.  </li>
+<li><strong>Merge &amp; Release</strong> – <code>main</code> is tagged, Helm charts are version‑bumped, and the GitHub Actions pipeline triggers a <strong>blue‑green</strong> deployment.  </li>
+</ol>
+<p>All steps are auditable via GitHub <strong>audit log</strong> and <strong>SLSA</strong> provenance.</p>
 <hr />
-<h2>4️⃣ Artifact &amp; Model Registry Management</h2>
+<h2>6. Compliance Controls Matrix</h2>
 <table>
 <thead>
 <tr>
-<th>Step</th>
-<th>Tool</th>
-<th>Recommended Settings</th>
+<th><strong>Compliance Tag</strong></th>
+<th><strong>ISO 27001 Annex A</strong></th>
+<th><strong>NIST CSF ID</strong></th>
+<th><strong>CIS Benchmark</strong></th>
+<th><strong>Enforced Controls</strong></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>Model storage</strong></td>
-<td><strong>Amazon S3 (versioned)</strong> or <strong>LakeFS</strong></td>
-<td>- Bucket encryption with KMS key <br> - <code>ObjectLock</code> for immutability <br> - Lifecycle rule: transition to Glacier after 30 days (archival)</td>
+<td><code>PCI-DSS</code></td>
+<td>A.12.3, A.14.2</td>
+<td>PR.DS‑1, PR.IP‑3</td>
+<td>4.1, 5.3</td>
+<td>Enable encryption‑at‑rest, tokenisation, PCI‑SCANNER</td>
 </tr>
 <tr>
-<td><strong>Metadata &amp; lineage</strong></td>
-<td><strong>MLflow Tracking Server</strong> (hosted on EKS)</td>
-<td>- Register model with <code>mlflow.register_model()</code> <br> - Store checksum (<code>sha256</code>) as a tag <br> - Capture <code>git_commit</code>, <code>data_version</code>, <code>hyperparameters</code></td>
+<td><code>HIPAA</code></td>
+<td>164.312(a)(1)</td>
+<td>DE.CM‑7</td>
+<td>2.2, 3.5</td>
+<td>Audit logs retained 6 yr, IAM MFA</td>
 </tr>
 <tr>
-<td><strong>Data versioning</strong></td>
-<td><strong>DVC</strong> (remote = S3)</td>
-<td>- <code>dvc add data/</code> <br> - <code>dvc push</code> <br> - Store <code>dvc.lock</code> in Git for reproducibility</td>
+<td><code>SOC2</code></td>
+<td>CC6.1, CC7.2</td>
+<td>ID.BE‑4</td>
+<td>1.1, 7.2</td>
+<td>Continuous monitoring, incident response playbook</td>
 </tr>
 <tr>
-<td><strong>Checksum verification</strong></td>
-<td><strong>sha256sum</strong> in CI</td>
-<td><code>bash\nsha256sum model.ckpt &gt; checksum.txt\n</code></td>
-</tr>
-<tr>
-<td><strong>Access control</strong></td>
-<td><strong>IAM policy</strong> attached to the EKS node role &amp; to the <code>model-registry</code> ServiceAccount via <strong>IRSA</strong></td>
-<td><code>json\n{\n  \"Effect\": \"Allow\",\n  \"Action\": [\"s3:GetObject\", \"s3:ListBucket\"],\n  \"Resource\": [\"arn:aws:s3:::ml-models\", \"arn:aws:s3:::ml-models/*\"]\n}\n</code></td>
+<td><code>ISO27001</code></td>
+<td>All Annex A</td>
+<td>All CSF</td>
+<td>All CIS</td>
+<td>Baseline hardening, RBAC, SSO</td>
 </tr>
 </tbody>
 </table>
 <blockquote>
-<p><strong>Result:</strong> The model artifact is immutable, versioned, and auditable. All downstream pipelines can retrieve it via a <strong>CSI driver</strong> (see Section 5).</p>
+<p><strong>Location:</strong> <code>compliance/matrix.md</code> (embedded above for immediate reference).  </p>
 </blockquote>
 <hr />
-<h2>5️⃣ Multi‑Stage Docker Build</h2>
-<p>Below is a <strong>complete, production‑grade Dockerfile</strong> that builds a TorchServe‑based inference container, injects the model via a <strong>CSI driver</strong>, validates checksums, and hardens the image (CIS Docker Benchmark).  </p>
-<pre><code class="language-Dockerfile"># --------------------------------------------------------------
-# Stage 0 – Builder (PyTorch + TorchServe)
-# --------------------------------------------------------------
-FROM nvcr.io/nvidia/pytorch:23.05-py3 AS builder
-
-# 1️⃣ Install TorchServe &amp; dependencies (pinned versions)
-RUN pip install --no-cache-dir \
-    torch==2.2.0 \
-    torchvision==0.17.0 \
-    torchserve==0.9.2 \
-    torch-model-archiver==0.9.2 \
-    transformers==4.40.2 \
-    onnxruntime-gpu==1.18.0
-
-# 2️⃣ Create a non‑root user (CIS‑Docker #5.5)
-ARG USERNAME=appuser
-ARG UID=10001
-RUN adduser \
-    --disabled-password \
-    --gecos &quot;&quot; \
-    --home &quot;/home/${USERNAME}&quot; \
-    --shell &quot;/sbin/nologin&quot; \
-    --uid &quot;${UID}&quot; \
-    &quot;${USERNAME}&quot;
-
-# --------------------------------------------------------------
-# Stage 1 – Runtime (minimal, hardened)
-# --------------------------------------------------------------
-FROM nvidia/cuda:12.2.2-runtime-ubuntu22.04 AS runtime
-
-# 1️⃣ Install runtime deps only (no compilers)
-RUN apt-get update &amp;&amp; \
-    apt-get install -y --no-install-recommends \
-        ca-certificates \
-        curl \
-        libgomp1 \
-        libjemalloc2 &amp;&amp; \
-    rm -rf /var/lib/apt/lists/*
-
-# 2️⃣ Copy TorchServe binaries from builder
-COPY --from=builder /usr/local/bin/torchserve /usr/local/bin/
-COPY --from=builder /usr/local/bin/torch-model-archiver /usr/local/bin/
-COPY --from=builder /usr/local/lib/python3.10/dist-packages /opt/torchserve/python/
-
-# 3️⃣ Add non‑root user (same UID/GID as builder)
-ARG USERNAME=appuser
-ARG UID=10001
-RUN adduser \
-    --disabled-password \
-    --gecos &quot;&quot; \
-    --home &quot;/home/${USERNAME}&quot; \
-    --shell &quot;/sbin/nologin&quot; \
-    --uid &quot;${UID}&quot; \
-    &quot;${USERNAME}&quot;
-
-# 4️⃣ Create directories with proper permissions
-RUN mkdir -p /home/${USERNAME}/model-store &amp;&amp; \
-    chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}
-
-# 5️⃣ Switch to non‑root user
-USER ${USERNAME}
-WORKDIR /home/${USERNAME}
-
-# --------------------------------------------------------------
-# Stage 2 – Model injection (CSI driver mounts model at /model)
-# --------------------------------------------------------------
-# The model is **not** baked into the image. It will be mounted
-# at runtime via a CSI volume (see k8s manifest). The entrypoint
-# validates the checksum before starting TorchServe.
-
-COPY entrypoint.sh /usr/local/bin/entrypoint.sh
-RUN chmod +x /usr/local/bin/entrypoint.sh
-
-ENTRYPOINT [&quot;/usr/local/bin/entrypoint.sh&quot;]
+<h2>7. Observability Blueprint</h2>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Tool</th>
+<th>Version</th>
+<th>Primary Metrics</th>
+<th>SLO / SLA</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Metrics</strong></td>
+<td>Prometheus</td>
+<td><code>2.53.0</code></td>
+<td><code>request_latency_seconds</code>, <code>cpu_usage</code>, <code>replica_ready</code></td>
+<td>99.9 % of requests &lt; 200 ms</td>
+</tr>
+<tr>
+<td><strong>Logs</strong></td>
+<td>Loki</td>
+<td><code>2.9.2</code></td>
+<td>Log ingestion rate, error‑rate</td>
+<td>99.5 % log availability</td>
+</tr>
+<tr>
+<td><strong>Tracing</strong></td>
+<td>Jaeger</td>
+<td><code>1.53.0</code></td>
+<td><code>trace_duration</code>, <code>error_spans</code></td>
+<td>99 % of traces captured</td>
+</tr>
+<tr>
+<td><strong>Dashboards</strong></td>
+<td>Grafana</td>
+<td><code>10.4.0</code></td>
+<td>Composite SLO view</td>
+<td>99.9 % dashboard uptime</td>
+</tr>
+<tr>
+<td><strong>Alerting</strong></td>
+<td>Alertmanager</td>
+<td><code>0.27.0</code></td>
+<td>Alert latency, notification success</td>
+<td>99 % alerts fire within 30 s</td>
+</tr>
+</tbody>
+</table>
+<p><strong>SLO Definition (example)</strong>  </p>
+<pre><code class="language-yaml">slo:
+  name: &quot;API Latency&quot;
+  target: 99.9
+  objective: &quot;p99 latency &lt; 200ms over 30d&quot;
+  alert:
+    name: &quot;LatencyHigh&quot;
+    severity: &quot;critical&quot;
+    for: &quot;5m&quot;
+    annotations:
+      summary: &quot;API latency exceeds SLO&quot;
+      runbook: &quot;runbooks/latency.md&quot;
 </code></pre>
-<h3><code>entrypoint.sh</code> (runtime verification)</h3>
-<p></div>bash</p>
-<h1>!/usr/bin/env bash</h1>
-<p>set -euo pipefail</p>
-<p>MODEL_DIR="/model"
-CHECKSUM_FILE="${MODEL_DIR}/checksum.txt"
-EXPECTED=$(cat "${CHECKSUM_FILE}")</p>
-<h1>Compute checksum of the checkpoint file (assumes single .ckpt)</h1>
-<p>ACTUAL=$(sha256sum "${MODEL_DIR}"/*.ckpt | awk '{print $1}')</p>
-<p>if [[ "${EXPECTED}" != "${ACTUAL}" ]]; then
-  echo "❌ Model checksum mismatch! Expected ${EXPECTED}, got ${ACTUAL}"
-  exit 1
-fi</p>
-<h1>Archive model for TorchServe</h1>
-<p>torch-model-archiver \
-  --model-name llm \
-  --version 1.0 \
-  --serialized-file "${MODEL_DIR}"/*.ckpt \
-  --handler transformers_handler.py \
-  --extra-files "${MODEL_DIR}/config.json,${MODEL</p>
+<p>All observability manifests are stored under <code>observability/</code> and deployed via <strong>Helm</strong> with <strong>GitOps</strong> (ArgoCD) synchronization.</p>
+<hr />
+<h2>8. CI/CD Pipeline Blueprint (GitHub Actions)</h2>
+<p></div>yaml
+name: CI‑CD Pipeline
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    types: [ opened, synchronize, reopened ]</p>
+<p>permissions:
+  contents: read
+  packages: write
+  id-token: write   # OIDC for cloud auth
+  security-events: write</p>
+<p>concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true</p>
+<p>jobs:
+  # -----------------------------------------------------------------
+  # 1️⃣ Lint &amp; Validate
+  # -----------------------------------------------------------------
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses</p>
 <h2>📊 System Architecture Visual Map</h2>
 <div class="mermaid">
 flowchart TD
-subgraph INPUT["Input & Prompt Construction"]
-        A[User Query] --> B[Prompt Template Engine]
-B --> C[Tokenization]
-end
-subgraph LLM["Large Language Model"]
-C --> D[LLM Inference (e.g., GPT‑4)]
-D --> E[Decoding Strategy]
-end
-subgraph POST["Post‑processing & Output"]
-E --> F[Answer Extraction]
-F --> G[Formatting & Validation]
-G --> H[Response Delivery]
-end
-    H --> I[End]
+Start(["Start"])
+    A[ "Component A\n- Input acquisition\n- Validation step\n- Pre-processing" ]
+    B[ "Component B\n- Core processing\n- Business logic\n- Decision making" ]
+    C[ "Component C\n- Post-processing\n- Formatting results\n- Logging" ]
+    D[ "Component D\n- Data persistence\n- Audit trail\n- Cleanup" ]
+    End(["End"])
+Start --> A
+    A --> B
+    B --> C
+    C --> D
+    D --> End
 </div>
 </article>
 
 <!-- Mermaid.js Flowchart Rendering Engine -->
 <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 <script>
-  if (typeof mermaid !== 'undefined') {{
-    mermaid.initialize({{ 
-      startOnLoad: true, 
+  if (typeof hljs !== 'undefined') {
+    hljs.highlightAll();
+  }
+  if (typeof mermaid !== 'undefined') {
+    mermaid.initialize({
+      startOnLoad: true,
       theme: 'dark',
-      themeVariables: {{
+      themeVariables: {
         background: '#0f172a',
         primaryColor: '#1e293b',
         lineColor: '#64748b'
-      }}
-    }});
-  }}
-  if (typeof hljs !== 'undefined') {{
-    hljs.highlightAll();
-  }}
+      }
+    });
+  }
 </script>
 </body>
 </html>
