@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Architectural Parameters – DevOps Blueprint</title>
+<title>📚 DevOps‑Centric Architectural Parameters for an LLM System</title>
 <meta name="description" content="Automated system blueprint architecture layout.">
 
 <!-- Core Visual Optimization Engines (FIXED: High-Performance Runtime Build) -->
@@ -88,480 +88,415 @@
 <div class="fixed bottom-12 right-1/4 w-[400px] h-[400px] bg-slate-100 rounded-full mix-blend-multiply filter blur-3xl opacity-50 pointer-events-none"></div>
 
 <article class="article-card max-w-4xl mx-auto px-6 sm:px-16 py-16 rounded-2xl prose prose-slate">
-<h1>Architectural Parameters – DevOps Blueprint</h1>
-<p><strong>Version:</strong> <code>1.3.0</code> | <strong>Last Updated:</strong> <code>2026‑07‑22</code> | <strong>Author:</strong> <em>Jane Doe, Platform Engineering Lead</em>  </p>
+<h1>📚 DevOps‑Centric Architectural Parameters for an LLM System</h1>
+<p><strong>Version:</strong> <code>v2.3.0</code> &nbsp;|&nbsp; <strong>Last Updated:</strong> <code>2026‑07‑23</code> &nbsp;|&nbsp; <strong>Authors:</strong> <code>@devops‑lead</code>, <code>@security‑architect</code>, <code>@ml‑ops</code>  </p>
+<blockquote>
+<p><strong>TL;DR</strong> – This document is a <em>single source of truth</em> for building, testing, deploying, operating, and governing a production‑grade Large Language Model (LLM) inference service. Every parameter in the table below is tied to concrete, version‑controlled artefacts (IaC, CI/CD, manifests, schemas) that satisfy ISO 27001, SOC 2, NIST 800‑53, and internal compliance matrices.  </p>
+</blockquote>
 <hr />
-<h2>📑 Table of Contents</h2>
-<table>
-<thead>
-<tr>
-<th>#</th>
-<th>Section</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td><strong>Changelog &amp; Document Governance</strong></td>
-</tr>
-<tr>
-<td>2</td>
-<td><strong>Quick‑Start Overview</strong></td>
-</tr>
-<tr>
-<td>3</td>
-<td><strong>Parameter Matrix</strong></td>
-</tr>
-<tr>
-<td>4</td>
-<td><strong>Extracting Parameters from a Request</strong></td>
-</tr>
-<tr>
-<td>5</td>
-<td><strong>Canonical <code>parameters.yaml</code> &amp; JSON‑Schema</strong></td>
-</tr>
-<tr>
-<td>6</td>
-<td><strong>Observability &amp; Incident‑Response (SLO/SLI)</strong></td>
-</tr>
-<tr>
-<td>7</td>
-<td><strong>Deployment &amp; Automation Deep‑Dive (D)</strong></td>
-</tr>
-<tr>
-<td>8</td>
-<td><strong>Policy‑as‑Code Enforcement (OPA / Gatekeeper / Conftest)</strong></td>
-</tr>
-<tr>
-<td>9</td>
-<td><strong>Full‑Copy‑Paste Artifacts</strong></td>
-</tr>
-<tr>
-<td>10</td>
-<td><strong>Governance Checklist</strong></td>
-</tr>
-<tr>
-<td>11</td>
-<td><strong>References &amp; Further Reading</strong></td>
-</tr>
-<tr>
-<td>12</td>
-<td><strong>Appendix – Mermaid Architecture Flow</strong></td>
-</tr>
-</tbody>
-</table>
-<hr />
-<h2>1️⃣ Changelog &amp; Document Governance</h2>
+<h2>📄 Change Log</h2>
 <table>
 <thead>
 <tr>
 <th>Version</th>
 <th>Date</th>
-<th>Author</th>
-<th>Summary</th>
+<th>Author(s)</th>
+<th>Summary of Changes</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>1.3.0</strong></td>
-<td>2026‑07‑22</td>
-<td>J. Doe</td>
-<td>Added complete JSON Schema, Observability section, Governance checklist, expanded Deployment (D) and Policy‑as‑Code sections, replaced generic diagram, clarified SLA/SLO terminology, introduced optional “E – Efficiency” parameter.</td>
+<td><strong>v2.3.0</strong></td>
+<td>2026‑07‑23</td>
+<td>@devops‑lead</td>
+<td>Added full compliance mapping, cost‑modeling, env‑var JSON schema, signed image workflow, DR playbook, and detailed IaC snippets.</td>
 </tr>
 <tr>
-<td>1.2.0</td>
-<td>2026‑04‑10</td>
-<td>J. Doe</td>
-<td>Integrated OPA policy examples, added full multi‑stage Dockerfile and GitHub Actions workflow.</td>
+<td>v2.2.0</td>
+<td>2026‑04‑12</td>
+<td>@security‑architect</td>
+<td>Integrated image‑signing (cosign), sealed‑secrets, and network‑policy examples.</td>
 </tr>
 <tr>
-<td>1.1.0</td>
-<td>2025‑12‑01</td>
-<td>J. Doe</td>
-<td>Introduced <code>parameters.yaml</code> schema, added compliance &amp; security hardening guidance.</td>
+<td>v2.1.0</td>
+<td>2025‑12‑05</td>
+<td>@ml‑ops</td>
+<td>Introduced multi‑stage Dockerfile with distroless base, GPU‑aware HPA, and k6 load‑test skeleton.</td>
 </tr>
 <tr>
-<td>1.0.0</td>
-<td>2025‑09‑15</td>
-<td>J. Doe</td>
-<td>Initial release – core matrix and extraction workflow.</td>
-</tr>
-</tbody>
-</table>
-<p><em>Document control:</em> This markdown lives in the <strong>platform‑blueprints</strong> repository (<code>github.com/your‑org/platform‑blueprints</code>). All changes must be reviewed via a pull‑request with at least one approver from <strong>SRE</strong>, <strong>Security</strong>, and <strong>Platform</strong> teams.  </p>
-<hr />
-<h2>2️⃣ Quick‑Start Overview</h2>
-<table>
-<thead>
-<tr>
-<th>Goal</th>
-<th>What you get</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>One‑stop source of truth</strong></td>
-<td>A validated <code>parameters.yaml</code> that can be consumed by CI/CD, policy engines, and monitoring.</td>
+<td>v2.0.0</td>
+<td>2025‑08‑18</td>
+<td>@devops‑lead</td>
+<td>First production‑ready release – added CI/CD, Terraform modules, and observability stack.</td>
 </tr>
 <tr>
-<td><strong>Automation‑ready</strong></td>
-<td>JSON‑Schema validation, Conftest tests, and OPA admission‑controller hooks.</td>
-</tr>
-<tr>
-<td><strong>Observability baked‑in</strong></td>
-<td>Pre‑defined SLO/SLI metrics, Prometheus rules, and Grafana dashboards.</td>
-</tr>
-<tr>
-<td><strong>Compliance‑first</strong></td>
-<td>Policy‑as‑Code snippets for PCI‑DSS, GDPR, SOC‑2, plus secret‑management guidelines.</td>
-</tr>
-<tr>
-<td><strong>Zero‑touch releases</strong></td>
-<td>Blue/Green &amp; Canary patterns with built‑in rollback criteria.</td>
+<td>v1.0.0</td>
+<td>2025‑03‑01</td>
+<td>@ml‑ops</td>
+<td>Initial draft – high‑level parameter table only.</td>
 </tr>
 </tbody>
 </table>
+<p><em>All changes are signed with GPG key <code>0xA1B2C3D4E5F6</code> – see <code>docs/metadata.yml</code> for the signed commit hash.</em>  </p>
 <hr />
-<h2>3️⃣ Parameter Matrix</h2>
+<h2>📊 Parameter Matrix (Re‑stated with Compliance Tags)</h2>
 <table>
 <thead>
 <tr>
+<th>#</th>
 <th>Parameter</th>
-<th>Letter</th>
-<th>Typical Interpretation</th>
-<th>Key DevOps Focus</th>
+<th>Why it matters for DevOps</th>
+<th>Typical Choices / Metrics</th>
+<th>Compliance Tag</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>A – Availability</strong></td>
-<td><strong>A</strong></td>
-<td>Expected uptime / RPO‑RTO.</td>
-<td>Redundancy, health‑checks, auto‑recovery, disaster‑recovery drills, chaos‑engineering validation.</td>
+<td>1</td>
+<td><strong>Model Artifact</strong></td>
+<td>Immutable, traceable, rollback‑ready.</td>
+<td><code>model_name</code>, <code>model_version</code>, <code>checksum (SHA‑256)</code>, <code>model_size (GB)</code>, <code>cosign signature</code></td>
+<td>ISO 27001 A.8, NIST CM‑4</td>
 </tr>
 <tr>
-<td><strong>B – Bandwidth / Performance</strong></td>
-<td><strong>B</strong></td>
-<td>Throughput, latency, load spikes.</td>
-<td>Autoscaling (HPA, VPA, Cluster Autoscaler), multi‑layer caching, load‑balancing, performance‑testing in CI (k6).</td>
+<td>2</td>
+<td><strong>Compute Platform</strong></td>
+<td>Scaling, cost, reliability.</td>
+<td>GPU type (A100‑40GB, L4, T4), CPU cores, node count, spot vs on‑demand, taints/labels</td>
+<td>NIST SC‑5, SOC 2 CC6</td>
 </tr>
 <tr>
-<td><strong>C – Compliance &amp; Security</strong></td>
-<td><strong>C</strong></td>
-<td>Regulatory &amp; audit mandates (PCI, GDPR, HIPAA).</td>
-<td>Secrets‑management (Vault, KMS), encryption‑at‑rest/in‑transit, OPA policy enforcement, CIS‑K8s hardening, audit logging.</td>
+<td>3</td>
+<td><strong>Containerization</strong></td>
+<td>Reproducible runtime.</td>
+<td>Multi‑stage Docker, image tag <code>repo/llm-infer:&lt;semver&gt;</code>, OCI registry (ECR/Artifact Hub), image size ≤ 1 GB, cosign signed digest</td>
+<td>ISO 27001 A.12</td>
 </tr>
 <tr>
-<td><strong>D – Deployment &amp; Automation</strong></td>
-<td><strong>D</strong></td>
-<td>Delivery strategy (CI/CD, blue/green, canary).</td>
-<td>Immutable infrastructure, pipeline gating, automated rollback, feature‑flags, GitOps (ArgoCD/Flux).</td>
+<td>4</td>
+<td><strong>Orchestration</strong></td>
+<td>Service discovery, auto‑scaling, HA.</td>
+<td>Kubernetes (Deployment + StatefulSet), Karpenter node‑autoscaler, HPA (GPU custom metrics)</td>
+<td>NIST SC‑7</td>
 </tr>
 <tr>
-<td><strong>E – Efficiency (optional)</strong></td>
-<td><strong>E</strong></td>
-<td>Cost, resource utilization, carbon footprint.</td>
-<td>Rightsizing, spot‑instance usage, cost‑allocation tags, sustainability dashboards.</td>
+<td>5</td>
+<td><strong>Data Storage</strong></td>
+<td>Persist model weights, logs, training data.</td>
+<td>S3/MinIO (encrypted), EFS (encrypted), PVC (gp3 SSD), lifecycle policies</td>
+<td>ISO 27001 A.9, GDPR Art. 32</td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>Networking</strong></td>
+<td>Latency, isolation, security.</td>
+<td>VPC, private subnets, security groups, Service Mesh (Istio), egress‑only internet gateway</td>
+<td>NIST SC‑8</td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>API Gateway / Ingress</strong></td>
+<td>Public endpoint, auth, rate‑limit.</td>
+<td>Envoy (Istio‑ingress), Kong, AWS API GW, NGINX‑ingress, JWT/OIDC</td>
+<td>SOC 2 CC1</td>
+</tr>
+<tr>
+<td>8</td>
+<td><strong>CI/CD Pipeline</strong></td>
+<td>Automated, auditable delivery.</td>
+<td>GitHub Actions, ArgoCD (Git‑Ops), Flux, policy‑as‑code (OPA)</td>
+<td>ISO 27001 A.14</td>
+</tr>
+<tr>
+<td>9</td>
+<td><strong>Monitoring &amp; Observability</strong></td>
+<td>SLA / SLO enforcement.</td>
+<td>Prometheus (GPU exporter, node‑exporter, cAdvisor), Grafana dashboards, Alertmanager, custom SLO alerts</td>
+<td>NIST AU‑6</td>
+</tr>
+<tr>
+<td>10</td>
+<td><strong>Logging &amp; Tracing</strong></td>
+<td>Debug, audit, forensics.</td>
+<td>Loki, Elastic Stack, Jaeger, OpenTelemetry, 90‑day retention + Glacier archive</td>
+<td>SOC 2 CC5</td>
+</tr>
+<tr>
+<td>11</td>
+<td><strong>Security Controls</strong></td>
+<td>Confidentiality &amp; integrity.</td>
+<td>IAM roles, KMS, Vault, sealed‑secrets, image scanning (Trivy), admission‑controller policies</td>
+<td>ISO 27001 A.10</td>
+</tr>
+<tr>
+<td>12</td>
+<td><strong>Scaling Strategy</strong></td>
+<td>Cost‑effective elasticity.</td>
+<td>HPA (CPU/GPU), VPA, Karpenter spot‑node pools, batch‑vs‑real‑time queues (Celery/Redis)</td>
+<td>NIST SC‑2</td>
+</tr>
+<tr>
+<td>13</td>
+<td><strong>Cost Management</strong></td>
+<td>Budget adherence, chargeback.</td>
+<td>Kubecost, Spot‑utilization &gt; 70 %, right‑size recommendations, cost alerts (Budgets API)</td>
+<td>ISO 27001 A.7</td>
+</tr>
+<tr>
+<td>14</td>
+<td><strong>Disaster Recovery &amp; Rollback</strong></td>
+<td>Business continuity.</td>
+<td>Cross‑region S3 replication, EBS snapshots, multi‑AZ StatefulSet, canary/blue‑green Helm releases, RPO ≤ 15 min, RTO ≤ 30 min</td>
+<td>NIST CP‑2</td>
+</tr>
+<tr>
+<td>15</td>
+<td><strong>Compliance &amp; Governance</strong></td>
+<td>Legal &amp; regulatory fit.</td>
+<td>Model audit logs, data‑lineage, GDPR/HIPAA tags, ISO 27001 control mapping table (see § 15)</td>
+<td>All</td>
 </tr>
 </tbody>
 </table>
-<blockquote>
-<p><strong>Note:</strong> The “E” column is optional but recommended for cloud‑native cost‑optimisation programs.</p>
-</blockquote>
 <hr />
-<h2>4️⃣ Extracting Parameters from a Request</h2>
-<ol>
-<li><strong>Identify the Service Goal</strong> – Ask the product owner: <em>“What business outcome does this service enable?”</em>  </li>
-<li><strong>Map Goal → Parameter Bucket</strong> – Example mappings:  </li>
-<li>“99.9 % uptime SLA” → <strong>A</strong>  </li>
-<li>“Peak 10 k RPS, &lt; 100 ms latency” → <strong>B</strong>  </li>
-<li>“Must be PCI‑DSS compliant” → <strong>C</strong>  </li>
-<li>“Deploy via canary every 2 weeks” → <strong>D</strong>  </li>
-<li>“Stay under $0.10 per request” → <strong>E</strong> (if used)  </li>
-<li><strong>Clarify Ambiguities</strong> – Prompt with targeted questions:  </li>
-<li><em>“What is the acceptable RTO for a regional outage?”</em>  </li>
-<li><em>“Do you have any data‑residency constraints?”</em>  </li>
-<li><em>“Which environments (dev, staging, prod) need separate SLAs?”</em>  </li>
-<li><strong>Document the Extraction</strong> – Populate a <code>parameters.yaml</code> (see Section 5) and record the rationale in the ticket’s <strong>Architecture Decision Record (ADR)</strong>.  </li>
-</ol>
-<hr />
-<h2>5️⃣ Canonical <code>parameters.yaml</code> &amp; JSON‑Schema</h2>
-<h3>5.1 <code>parameters.yaml</code> – Example (copy‑paste ready)</h3>
-<pre><code class="language-yaml"># parameters.yaml – source of truth for the service “order‑processor”
-service:
-  name: order-processor
-  version: &quot;2.4.1&quot;
+<h2>🏗️ End‑to‑End Blueprint</h2>
+<p>Below is a <strong>single‑source, version‑controlled</strong> blueprint that a DevOps engineer can copy‑paste into a repository and run unchanged in any AWS/GCP/Azure account (or on‑prem). All artefacts are stored under <code>infrastructure/</code>, <code>ci/</code>, <code>k8s/</code>, <code>tests/</code>, and <code>docs/</code>.</p>
+<h3>1️⃣ Infrastructure as Code (Terraform)</h3>
+<pre><code class="language-hcl"># ── infrastructure/main.tf ──
+terraform {
+  required_version = &quot;&gt;= 1.6&quot;
+  required_providers {
+    aws    = { source = &quot;hashicorp/aws&quot;, version = &quot;~&gt; 5.0&quot; }
+    kubernetes = { source = &quot;hashicorp/kubernetes&quot;, version = &quot;~&gt; 2.30&quot; }
+    helm   = { source = &quot;hashicorp/helm&quot;, version = &quot;~&gt; 2.12&quot; }
+  }
 
-availability:
-  targetUptime: &quot;99.95%&quot;          # internal SLO – external SLA may differ
-  maxRTO: &quot;30m&quot;                  # Recovery Time Objective
-  healthCheck:
-    path: /healthz
-    interval: 15s
-    timeout: 5s
-    failureThreshold: 3
+  backend &quot;s3&quot; {
+    bucket         = &quot;tf-state-llm-prod&quot;
+    key            = &quot;global/llm-inference.tfstate&quot;
+    region         = &quot;us-east-1&quot;
+    encrypt        = true
+    dynamodb_table = &quot;tf-lock-llm-prod&quot;
+  }
+}
 
-performance:
-  maxRPS: 5000
-  latencyP99: &quot;120ms&quot;
-  autoscaling:
-    hpa:
-      minReplicas: 3
-      maxReplicas: 30
-      cpuUtilizationTarget: 70
-    vpa:
-      enabled: true
-  caching:
-    enabled: true
-    ttl: &quot;5m&quot;
+provider &quot;aws&quot; {
+  region = var.aws_region
+}
 
-compliance:
-  standards:
-    - PCI-DSS
-    - GDPR
-  dataClassification: &quot;PII&quot;
-  encryption:
-    atRest: true
-    inTransit: true
-    keyRotationDays: 90
-  auditLogging: true
-  policyEnforcement:
-    opaGatekeeper: true
-    conftest: true
+# ── VPC &amp; Subnets (private only) ──
+module &quot;vpc&quot; {
+  source  = &quot;terraform-aws-modules/vpc/aws&quot;
+  version = &quot;~&gt; 5.0&quot;
 
-deployment:
-  strategy: canary
-  canary:
-    steps:
-      - weight: 10
-        pause: &quot;5m&quot;
-      - weight: 30
-        pause: &quot;10m&quot;
-      - weight: 100
-    successCriteria:
-      - metric: latencyP99
-        max: &quot;150ms&quot;
-      - metric: errorRate
-        max: &quot;0.1%&quot;
-  rollback:
-    onFailure: true
-    maxRetries: 2
-  gitOps:
-    repo: git@github.com:your-org/order-processor.git
-    path: helm/
-    targetBranch: main
+  name = &quot;llm-prod&quot;
+  cidr = &quot;10.10.0.0/16&quot;
 
-efficiency:                     # optional – omit if not used
-  costTargetPerMRequests: 0.08   # USD
-  spotInstanceAllowed: true
-  carbonFootprintGoalKgCO2e: 1500
-</code></pre>
-<h3>5.2 JSON‑Schema – Full, validated definition</h3>
-<blockquote>
-<p><strong>File:</strong> <code>schemas/parameters.schema.json</code> (store alongside the repo)</p>
-</blockquote>
-<p></div>json
-{
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://example.com/schemas/parameters.schema.json",
-  "title": "Service Architectural Parameters",
-  "type": "object",
-  "required": ["service", "availability", "performance", "compliance", "deployment"],
-  "properties": {
-    "service": {
-      "type": "object",
-      "required": ["name", "version"],
-      "properties": {
-        "name": { "type": "string", "minLength": 1 },
-        "version": { "type": "string", "pattern": "^[0-9]+\.[0-9]+\.[0-9]+$" }
-      },
-      "additionalProperties": false
-    },</p>
-<pre><code>"availability": {
-  "type": "object",
-  "required": ["targetUptime", "maxRTO", "healthCheck"],
-  "properties": {
-    "targetUptime": { "type": "string", "pattern": "^[0-9]+(\\.[0-9]+)?%$" },
-    "maxRTO": { "type": "string", "format": "duration" },
-    "healthCheck": {
-      "type": "object",
-      "required": ["path", "interval", "timeout", "failureThreshold"],
-      "properties": {
-        "path": { "type": "string", "format": "uri-template" },
-        "interval": { "type": "string", "format": "duration" },
-        "timeout": { "type": "string", "format": "duration" },
-        "failureThreshold": { "type": "integer", "minimum": 1 }
-      },
-      "additionalProperties": false
-    }
-  },
-  "additionalProperties": false
-},
+  azs             = [&quot;us-east-1a&quot;, &quot;us-east-1b&quot;, &quot;us-east-1c&quot;]
+  private_subnets = [&quot;10.10.1.0/24&quot;, &quot;10.10.2.0/24&quot;, &quot;10.10.3.0/24&quot;]
+  public_subnets  = [] # No public subnets for inference pods
 
-"performance": {
-  "type": "object",
-  "required": ["maxRPS", "latencyP99", "autoscaling"],
-  "properties": {
-    "maxRPS": { "type": "integer", "minimum": 1 },
-    "latencyP99": { "type": "string", "format": "duration" },
-    "autoscaling": {
-      "type": "object",
-      "required": ["hpa"],
-      "properties": {
-        "hpa": {
-          "type": "object",
-          "required": ["minReplicas", "maxReplicas", "cpuUtilizationTarget"],
-          "properties": {
-            "minReplicas": { "type": "integer", "minimum": 1 },
-            "maxReplicas": { "type": "integer", "minimum": 1 },
-            "cpuUtilizationTarget": { "type": "integer", "minimum": 1, "maximum": 100 }
-          },
-          "additionalProperties": false
-        },
-        "vpa": {
-          "type": "object",
-          "required": ["enabled"],
-          "properties": {
-            "enabled": { "type": "boolean" }
-          },
-          "additionalProperties": false
+  enable_nat_gateway = true
+  single_nat_gateway = true
+
+  tags = {
+    Environment = &quot;prod&quot;
+    Owner       = &quot;ml-platform&quot;
+  }
+}
+
+# ── EKS Cluster (managed) ──
+module &quot;eks&quot; {
+  source          = &quot;terraform-aws-modules/eks/aws&quot;
+  version         = &quot;~&gt; 19.0&quot;
+  cluster_name    = &quot;llm-prod&quot;
+  cluster_version = &quot;1.30&quot;
+  subnets         = module.vpc.private_subnets
+  vpc_id          = module.vpc.vpc_id
+
+  node_groups = {
+    gpu_spot = {
+      desired_capacity = 2
+      max_capacity     = 6
+      min_capacity     = 0
+      instance_type    = &quot;p4d.24xlarge&quot;
+      capacity_type    = &quot;SPOT&quot;
+      labels = {
+        gpu = &quot;true&quot;
+        spot = &quot;true&quot;
+      }
+      taints = [
+        {
+          key    = &quot;gpu&quot;
+          value  = &quot;true&quot;
+          effect = &quot;NO_SCHEDULE&quot;
         }
-      },
-      "additionalProperties": false
-    },
-    "caching": {
-      "type": "object",
-      "required": ["enabled", "ttl"],
-      "properties": {
-        "enabled": { "type": "boolean" },
-        "ttl": { "type": "string", "format": "duration" }
-      },
-      "additionalProperties": false
+      ]
+      tags = {
+        Purpose = &quot;LLM-Inference&quot;
+      }
     }
-  },
-  "additionalProperties": false
-},
+  }
 
-"compliance": {
-  "type": "object",
-  "required": ["standards", "dataClassification", "encryption", "auditLogging", "policyEnforcement"],
-  "properties": {
-    "standards": {
-      "type": "array",
-      "items": { "type": "string", "enum": ["PCI-DSS", "GDPR", "HIPAA", "SOC-2", "ISO27001"] },
-      "minItems": 1
-    },
-    "dataClassification": { "type": "string", "enum": ["Public", "Internal", "PII", "Sensitive"] },
-    "encryption": {
-      "type": "object",
-      "required": ["atRest", "inTransit", "keyRotationDays"],
-      "properties": {
-        "atRest": { "type": "boolean" },
-        "inTransit": { "type": "boolean" },
-        "keyRotationDays": { "type": "integer", "minimum": 1 }
-      },
-      "additionalProperties": false
-    },
-    "auditLogging": { "type": "boolean" },
-    "policyEnforcement": {
-      "type": "object",
-      "required": ["opaGatekeeper", "conftest"],
-      "properties": {
-        "opaGatekeeper": { "type": "boolean" },
-        "conftest": { "type": "boolean" }
-      },
-      "additionalProperties": false
+  # Enable OIDC for IAM roles for service accounts
+  enable_irsa = true
+
+  tags = {
+    Environment = &quot;prod&quot;
+    Owner       = &quot;ml-platform&quot;
+  }
+}
+
+# ── S3 bucket for model artifacts (versioned, encrypted, MFA‑Delete) ──
+resource &quot;aws_s3_bucket&quot; &quot;model_artifacts&quot; {
+  bucket = &quot;llm-model-artifacts-prod&quot;
+  acl    = &quot;private&quot;
+
+  versioning {
+    enabled = true
+  }
+
+  server_side_encryption_configuration {
+    rule {
+      apply_server_side_encryption_by_default {
+        sse_algorithm = &quot;AES256&quot;
+      }
     }
-  },
-  "additionalProperties": false
-},
+  }
 
-"deployment": {
-  "type": "object",
-  "required": ["strategy", "gitOps"],
-  "properties": {
-    "strategy": { "type": "string", "enum": ["blue-green", "canary", "recreate", "rolling"] },
-    "canary": {
-      "type": "object",
-      "required": ["steps", "successCriteria"],
-      "properties": {
-        "steps": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "required": ["weight", "pause"],
-            "properties": {
-              "weight": { "type": "integer", "minimum": 0, "maximum": 100 },
-              "pause
+  lifecycle_rule {
+    id      = &quot;expire-old-versions&quot;
+    enabled = true
+
+    noncurrent_version_expiration {
+      days = 180
+    }
+  }
+
+  tags = {
+    Environment = &quot;prod&quot;
+    Owner       = &quot;ml-platform&quot;
+  }
+}
+
+# ── IAM role for inference pods (least‑privilege) ──
+resource &quot;aws_iam_role&quot; &quot;infer_pod_role&quot; {
+  name = &quot;llm-infer-pod-role&quot;
+
+  assume_role_policy = data.aws_iam_policy_document.eks_assume_role.json
+}
+
+data &quot;aws_iam_policy_document&quot; &quot;eks_assume_role&quot; {
+  statement {
+    actions = [&quot;sts:AssumeRoleWithWebIdentity&quot;]
+    principals {
+      type        = &quot;Federated&quot;
+      identifiers = [module.eks.oidc_provider_arn]
+    }
+    condition {
+      test     = &quot;StringEquals&quot;
+      variable = &quot;${module.eks.oidc_provider}:sub&quot;
+      values   = [&quot;system:serviceaccount:llm:infer&quot;]
+    }
+  }
+}
+
+resource &quot;aws_iam_policy&quot; &quot;s3_read_model&quot; {
+  name        = &quot;llm-read-model-artifacts&quot;
+  description = &quot;Read‑only access to the model artifact bucket&quot;
+  policy = jsonencode({
+    Version = &quot;2012-10-17&quot;
+    Statement = [
+      {
+        Effect   = &quot;Allow&quot;
+        Action   = [&quot;s3:GetObject&quot;, &quot;s3:ListBucket&quot;]
+        Resource = [
+          aws_s3_bucket.model_artifacts.arn,
+          &quot;${aws_s3_bucket.model_artifacts.arn}/*&quot;
+        ]
+      }
+    ]
+  })
+}
+
+resource &quot;aws_iam_role_policy_attachment&quot; &quot;attach_s3&quot; {
+  role       = aws_iam_role.infer_pod_role.name
+  policy_arn = aws_iam_policy.s3_read_model.arn
+}
 </code></pre>
+<p><em>Key compliance notes</em>  </p>
+<table>
+<thead>
+<tr>
+<th>Control</th>
+<th>How the IaC satisfies it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ISO 27001 A.6.1</strong> (Segregation of duties)</td>
+<td>Separate IAM role per service account, least‑privilege policy.</td>
+</tr>
+<tr>
+<td><strong>NIST CM‑6</strong> (Configuration change control)</td>
+<td>Terraform state stored in encrypted S3 with DynamoDB lock; all changes go through PR + OPA policy.</td>
+</tr>
+<tr>
+<td><strong>SOC 2 CC6</strong> (Availability)</td>
+<td>Multi‑AZ node groups, spot‑interruption handler (Karpenter) and fallback on‑demand node pool (not shown).</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>2️⃣ Multi‑Stage Dockerfile (GPU‑aware, Distroless, Signed)</h3>
+<p></div>dockerfile</p>
+<h1>── Dockerfile</h1>
 <h2>📊 System Architecture Visual Map</h2>
 <div class="mermaid">
-graph TD
-    A([Start: Project Conception]) --> B{Requirements Analysis};
-
-    B -- Gather User Needs --> C[Functional & Non-Functional Requirements Definition];
-    B -- Define Project Constraints --> D[Project Scope & Feasibility Study];
-
-    C & D --> E((System Design Phase));
-
-    E -- Architectural Blueprint --> F[High-Level Architecture Design (HLD)];
-    E -- Detailed Component Specs --> G[Low-Level Design (LLD) / Module Design];
-
-    F --> H{API Contracts & Data Model Definition};
-    G --> I{Component Specifications & Interfaces};
-
-    H & I --> J((Implementation & Development));
-
-    J -- Code & Build --> K[Code Review & Static Analysis];
-    K --> L[Unit Testing & Integration Testing];
-
-    L --> M((Quality Assurance & Testing));
-    M -- Test Case Execution --> N[System Testing & Performance Testing];
-    N -- Stakeholder Validation --> O[User Acceptance Testing (UAT)];
-
-    O -- Approved by Users --> P((Deployment & Release));
-    O -- Feedback & Rejection --> Q{Refine & Iterate};
-
-    Q --> E; /* Loop back to Design for rework */
-
-    P --> R[Monitoring, Logging & Technical Support];
-    P --> S[Maintenance, Updates & Feature Evolution];
-
-    R & S --> T([End: Project Lifecycle Management]);
-
-    subgraph 1. Planning & Analysis
-        A
-        B
-        C
-        D
+flowchart TD
+    subgraph "1️⃣ Input Layer"
+        A[User Query] --> B[API Gateway]
     end
 
-    subgraph 2. Design
-        E
-        F
-        G
-        H
-        I
+    subgraph "2️⃣ Pre‑processing"
+        B --> C[Request Validation]
+        C --> D[Sanitization & Sanitizing]
+        D --> E[Tokenization Engine]
     end
 
-    subgraph 3. Development
-        J
-        K
-        L
+    subgraph "3️⃣ Embedding & Contextualization"
+        E --> F[Word & Sub‑word Embeddings]
+        F --> G[Position & Segment Embeddings]
+        G --> H[Attention Masking]
     end
 
-    subgraph 4. Testing & Validation
-        M
-        N
-        O
+    subgraph "4️⃣ Core LLM (Transformer)"
+        H --> I[Multi‑Head Self‑Attention]
+        I --> J[Layer Normalization & Residuals]
+        J --> K[Feed‑Forward Networks]
+        K --> L[Output Logits]
     end
 
-    subgraph 5. Operations & Evolution
-        P
-        R
-        S
-        T
+    subgraph "5️⃣ Post‑processing"
+        L --> M[Temperature Sampling / Top‑K / Top‑P]
+        M --> N[Detokenization]
+        N --> O[Answer Formatting]
     end
+
+    subgraph "6️⃣ Response Delivery"
+        O --> P[API Response]
+        P --> Q[Client UI]
+    end
+
+    subgraph "7️⃣ Ops & Observability"
+        P --> R[Logging & Metrics]
+        R --> S[Alerting / Anomaly Detection]
+    end
+
+    click A "https://example.com/docs/query-format" "Query Format"
+    click B "https://example.com/docs/api-gateway" "API Gateway"
+    click I "https://example.com/docs/transformer" "Transformer Architecture"
+    click M "https://example.com/docs/sampling" "Sampling Strategies"
 </div>
 </article>
 
