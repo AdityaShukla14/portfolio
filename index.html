@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>📚 DevOps‑Centric Architectural Parameters for an LLM System</title>
+<title>Production‑Ready DevOps‑Engineered View on an LLM‑Centric Architecture</title>
 <meta name="description" content="Automated system blueprint architecture layout.">
 
 <!-- Core Visual Optimization Engines (FIXED: High-Performance Runtime Build) -->
 <script src="https://cdn.tailwindcss.com"></script>
 
-<!-- Code Highlight Script Imports (FIXED: Stabilized CDN Protocols) -->
-<link rel="stylesheet" href="https://cloudflare.com">
-<script src="https://cloudflare.com"></script>
+<!-- Code Highlight Script Imports -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 
 <!-- Clean Sans-Serif & Mono Typography Imports (FIXED: Corrected Google API Routes) -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -88,420 +88,451 @@
 <div class="fixed bottom-12 right-1/4 w-[400px] h-[400px] bg-slate-100 rounded-full mix-blend-multiply filter blur-3xl opacity-50 pointer-events-none"></div>
 
 <article class="article-card max-w-4xl mx-auto px-6 sm:px-16 py-16 rounded-2xl prose prose-slate">
-<h1>📚 DevOps‑Centric Architectural Parameters for an LLM System</h1>
-<p><strong>Version:</strong> <code>v2.3.0</code> &nbsp;|&nbsp; <strong>Last Updated:</strong> <code>2026‑07‑23</code> &nbsp;|&nbsp; <strong>Authors:</strong> <code>@devops‑lead</code>, <code>@security‑architect</code>, <code>@ml‑ops</code>  </p>
+<h1>📚 Production‑Ready DevOps‑Engineered View on an <strong>LLM‑Centric</strong> Architecture</h1>
 <blockquote>
-<p><strong>TL;DR</strong> – This document is a <em>single source of truth</em> for building, testing, deploying, operating, and governing a production‑grade Large Language Model (LLM) inference service. Every parameter in the table below is tied to concrete, version‑controlled artefacts (IaC, CI/CD, manifests, schemas) that satisfy ISO 27001, SOC 2, NIST 800‑53, and internal compliance matrices.  </p>
+<p><strong>Goal</strong> – Deliver a single, self‑contained reference guide that a new DevOps engineer can hand‑off to a team, run through a CI/CD pipeline, and land a production‑grade LLM service on Kubernetes with observability, security, cost‑control, and governance baked in.  </p>
 </blockquote>
 <hr />
-<h2>📄 Change Log</h2>
-<table>
-<thead>
-<tr>
-<th>Version</th>
-<th>Date</th>
-<th>Author(s)</th>
-<th>Summary of Changes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>v2.3.0</strong></td>
-<td>2026‑07‑23</td>
-<td>@devops‑lead</td>
-<td>Added full compliance mapping, cost‑modeling, env‑var JSON schema, signed image workflow, DR playbook, and detailed IaC snippets.</td>
-</tr>
-<tr>
-<td>v2.2.0</td>
-<td>2026‑04‑12</td>
-<td>@security‑architect</td>
-<td>Integrated image‑signing (cosign), sealed‑secrets, and network‑policy examples.</td>
-</tr>
-<tr>
-<td>v2.1.0</td>
-<td>2025‑12‑05</td>
-<td>@ml‑ops</td>
-<td>Introduced multi‑stage Dockerfile with distroless base, GPU‑aware HPA, and k6 load‑test skeleton.</td>
-</tr>
-<tr>
-<td>v2.0.0</td>
-<td>2025‑08‑18</td>
-<td>@devops‑lead</td>
-<td>First production‑ready release – added CI/CD, Terraform modules, and observability stack.</td>
-</tr>
-<tr>
-<td>v1.0.0</td>
-<td>2025‑03‑01</td>
-<td>@ml‑ops</td>
-<td>Initial draft – high‑level parameter table only.</td>
-</tr>
-</tbody>
-</table>
-<p><em>All changes are signed with GPG key <code>0xA1B2C3D4E5F6</code> – see <code>docs/metadata.yml</code> for the signed commit hash.</em>  </p>
-<hr />
-<h2>📊 Parameter Matrix (Re‑stated with Compliance Tags)</h2>
+<h2>1️⃣ Table of Contents</h2>
 <table>
 <thead>
 <tr>
 <th>#</th>
-<th>Parameter</th>
-<th>Why it matters for DevOps</th>
-<th>Typical Choices / Metrics</th>
-<th>Compliance Tag</th>
+<th>Section</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>1</td>
-<td><strong>Model Artifact</strong></td>
-<td>Immutable, traceable, rollback‑ready.</td>
-<td><code>model_name</code>, <code>model_version</code>, <code>checksum (SHA‑256)</code>, <code>model_size (GB)</code>, <code>cosign signature</code></td>
-<td>ISO 27001 A.8, NIST CM‑4</td>
+<td>Overview &amp; Core Concepts</td>
 </tr>
 <tr>
 <td>2</td>
-<td><strong>Compute Platform</strong></td>
-<td>Scaling, cost, reliability.</td>
-<td>GPU type (A100‑40GB, L4, T4), CPU cores, node count, spot vs on‑demand, taints/labels</td>
-<td>NIST SC‑5, SOC 2 CC6</td>
+<td>End‑to‑End Architecture Diagram</td>
 </tr>
 <tr>
 <td>3</td>
-<td><strong>Containerization</strong></td>
-<td>Reproducible runtime.</td>
-<td>Multi‑stage Docker, image tag <code>repo/llm-infer:&lt;semver&gt;</code>, OCI registry (ECR/Artifact Hub), image size ≤ 1 GB, cosign signed digest</td>
-<td>ISO 27001 A.12</td>
+<td>Artifact &amp; Model Registry Management</td>
 </tr>
 <tr>
 <td>4</td>
-<td><strong>Orchestration</strong></td>
-<td>Service discovery, auto‑scaling, HA.</td>
-<td>Kubernetes (Deployment + StatefulSet), Karpenter node‑autoscaler, HPA (GPU custom metrics)</td>
-<td>NIST SC‑7</td>
+<td>Multi‑Stage Docker Build (TorchServe + Triton)</td>
 </tr>
 <tr>
 <td>5</td>
-<td><strong>Data Storage</strong></td>
-<td>Persist model weights, logs, training data.</td>
-<td>S3/MinIO (encrypted), EFS (encrypted), PVC (gp3 SSD), lifecycle policies</td>
-<td>ISO 27001 A.9, GDPR Art. 32</td>
+<td>Runtime &amp; Inference Engine Configuration</td>
 </tr>
 <tr>
 <td>6</td>
-<td><strong>Networking</strong></td>
-<td>Latency, isolation, security.</td>
-<td>VPC, private subnets, security groups, Service Mesh (Istio), egress‑only internet gateway</td>
-<td>NIST SC‑8</td>
+<td>Kubernetes Manifests (Deploy, Service, HPA, PDB, NetworkPolicy)</td>
 </tr>
 <tr>
 <td>7</td>
-<td><strong>API Gateway / Ingress</strong></td>
-<td>Public endpoint, auth, rate‑limit.</td>
-<td>Envoy (Istio‑ingress), Kong, AWS API GW, NGINX‑ingress, JWT/OIDC</td>
-<td>SOC 2 CC1</td>
+<td>Autoscaling &amp; Spot‑Instance Strategy (Karpenter + HPA)</td>
 </tr>
 <tr>
 <td>8</td>
-<td><strong>CI/CD Pipeline</strong></td>
-<td>Automated, auditable delivery.</td>
-<td>GitHub Actions, ArgoCD (Git‑Ops), Flux, policy‑as‑code (OPA)</td>
-<td>ISO 27001 A.14</td>
+<td>CI/CD Pipeline (GitHub Actions → Argo CD → Argo Rollouts)</td>
 </tr>
 <tr>
 <td>9</td>
-<td><strong>Monitoring &amp; Observability</strong></td>
-<td>SLA / SLO enforcement.</td>
-<td>Prometheus (GPU exporter, node‑exporter, cAdvisor), Grafana dashboards, Alertmanager, custom SLO alerts</td>
-<td>NIST AU‑6</td>
+<td>Observability Stack (Prometheus, Grafana, OpenTelemetry/Jaeger, Loki)</td>
 </tr>
 <tr>
 <td>10</td>
-<td><strong>Logging &amp; Tracing</strong></td>
-<td>Debug, audit, forensics.</td>
-<td>Loki, Elastic Stack, Jaeger, OpenTelemetry, 90‑day retention + Glacier archive</td>
-<td>SOC 2 CC5</td>
+<td>Security &amp; Compliance Hardening (CIS, IAM, Secrets Store CSI, Auditing)</td>
 </tr>
 <tr>
 <td>11</td>
-<td><strong>Security Controls</strong></td>
-<td>Confidentiality &amp; integrity.</td>
-<td>IAM roles, KMS, Vault, sealed‑secrets, image scanning (Trivy), admission‑controller policies</td>
-<td>ISO 27001 A.10</td>
+<td>Cost Management &amp; Budget Alerts</td>
 </tr>
 <tr>
 <td>12</td>
-<td><strong>Scaling Strategy</strong></td>
-<td>Cost‑effective elasticity.</td>
-<td>HPA (CPU/GPU), VPA, Karpenter spot‑node pools, batch‑vs‑real‑time queues (Celery/Redis)</td>
-<td>NIST SC‑2</td>
+<td>Disaster Recovery &amp; Backup Policy</td>
 </tr>
 <tr>
 <td>13</td>
-<td><strong>Cost Management</strong></td>
-<td>Budget adherence, chargeback.</td>
-<td>Kubecost, Spot‑utilization &gt; 70 %, right‑size recommendations, cost alerts (Budgets API)</td>
-<td>ISO 27001 A.7</td>
+<td>Governance, Model Cards &amp; Bias Audits</td>
 </tr>
 <tr>
 <td>14</td>
-<td><strong>Disaster Recovery &amp; Rollback</strong></td>
-<td>Business continuity.</td>
-<td>Cross‑region S3 replication, EBS snapshots, multi‑AZ StatefulSet, canary/blue‑green Helm releases, RPO ≤ 15 min, RTO ≤ 30 min</td>
-<td>NIST CP‑2</td>
+<td>Environment Segregation (dev / test / prod)</td>
 </tr>
 <tr>
 <td>15</td>
-<td><strong>Compliance &amp; Governance</strong></td>
-<td>Legal &amp; regulatory fit.</td>
-<td>Model audit logs, data‑lineage, GDPR/HIPAA tags, ISO 27001 control mapping table (see § 15)</td>
-<td>All</td>
+<td>Performance‑Testing Playbook (k6 / Locust)</td>
+</tr>
+<tr>
+<td>16</td>
+<td>Quick‑Start Checklist</td>
+</tr>
+<tr>
+<td>17</td>
+<td>References &amp; Further Reading</td>
 </tr>
 </tbody>
 </table>
 <hr />
-<h2>🏗️ End‑to‑End Blueprint</h2>
-<p>Below is a <strong>single‑source, version‑controlled</strong> blueprint that a DevOps engineer can copy‑paste into a repository and run unchanged in any AWS/GCP/Azure account (or on‑prem). All artefacts are stored under <code>infrastructure/</code>, <code>ci/</code>, <code>k8s/</code>, <code>tests/</code>, and <code>docs/</code>.</p>
-<h3>1️⃣ Infrastructure as Code (Terraform)</h3>
-<pre><code class="language-hcl"># ── infrastructure/main.tf ──
-terraform {
-  required_version = &quot;&gt;= 1.6&quot;
-  required_providers {
-    aws    = { source = &quot;hashicorp/aws&quot;, version = &quot;~&gt; 5.0&quot; }
-    kubernetes = { source = &quot;hashicorp/kubernetes&quot;, version = &quot;~&gt; 2.30&quot; }
-    helm   = { source = &quot;hashicorp/helm&quot;, version = &quot;~&gt; 2.12&quot; }
-  }
-
-  backend &quot;s3&quot; {
-    bucket         = &quot;tf-state-llm-prod&quot;
-    key            = &quot;global/llm-inference.tfstate&quot;
-    region         = &quot;us-east-1&quot;
-    encrypt        = true
-    dynamodb_table = &quot;tf-lock-llm-prod&quot;
-  }
-}
-
-provider &quot;aws&quot; {
-  region = var.aws_region
-}
-
-# ── VPC &amp; Subnets (private only) ──
-module &quot;vpc&quot; {
-  source  = &quot;terraform-aws-modules/vpc/aws&quot;
-  version = &quot;~&gt; 5.0&quot;
-
-  name = &quot;llm-prod&quot;
-  cidr = &quot;10.10.0.0/16&quot;
-
-  azs             = [&quot;us-east-1a&quot;, &quot;us-east-1b&quot;, &quot;us-east-1c&quot;]
-  private_subnets = [&quot;10.10.1.0/24&quot;, &quot;10.10.2.0/24&quot;, &quot;10.10.3.0/24&quot;]
-  public_subnets  = [] # No public subnets for inference pods
-
-  enable_nat_gateway = true
-  single_nat_gateway = true
-
-  tags = {
-    Environment = &quot;prod&quot;
-    Owner       = &quot;ml-platform&quot;
-  }
-}
-
-# ── EKS Cluster (managed) ──
-module &quot;eks&quot; {
-  source          = &quot;terraform-aws-modules/eks/aws&quot;
-  version         = &quot;~&gt; 19.0&quot;
-  cluster_name    = &quot;llm-prod&quot;
-  cluster_version = &quot;1.30&quot;
-  subnets         = module.vpc.private_subnets
-  vpc_id          = module.vpc.vpc_id
-
-  node_groups = {
-    gpu_spot = {
-      desired_capacity = 2
-      max_capacity     = 6
-      min_capacity     = 0
-      instance_type    = &quot;p4d.24xlarge&quot;
-      capacity_type    = &quot;SPOT&quot;
-      labels = {
-        gpu = &quot;true&quot;
-        spot = &quot;true&quot;
-      }
-      taints = [
-        {
-          key    = &quot;gpu&quot;
-          value  = &quot;true&quot;
-          effect = &quot;NO_SCHEDULE&quot;
-        }
-      ]
-      tags = {
-        Purpose = &quot;LLM-Inference&quot;
-      }
-    }
-  }
-
-  # Enable OIDC for IAM roles for service accounts
-  enable_irsa = true
-
-  tags = {
-    Environment = &quot;prod&quot;
-    Owner       = &quot;ml-platform&quot;
-  }
-}
-
-# ── S3 bucket for model artifacts (versioned, encrypted, MFA‑Delete) ──
-resource &quot;aws_s3_bucket&quot; &quot;model_artifacts&quot; {
-  bucket = &quot;llm-model-artifacts-prod&quot;
-  acl    = &quot;private&quot;
-
-  versioning {
-    enabled = true
-  }
-
-  server_side_encryption_configuration {
-    rule {
-      apply_server_side_encryption_by_default {
-        sse_algorithm = &quot;AES256&quot;
-      }
-    }
-  }
-
-  lifecycle_rule {
-    id      = &quot;expire-old-versions&quot;
-    enabled = true
-
-    noncurrent_version_expiration {
-      days = 180
-    }
-  }
-
-  tags = {
-    Environment = &quot;prod&quot;
-    Owner       = &quot;ml-platform&quot;
-  }
-}
-
-# ── IAM role for inference pods (least‑privilege) ──
-resource &quot;aws_iam_role&quot; &quot;infer_pod_role&quot; {
-  name = &quot;llm-infer-pod-role&quot;
-
-  assume_role_policy = data.aws_iam_policy_document.eks_assume_role.json
-}
-
-data &quot;aws_iam_policy_document&quot; &quot;eks_assume_role&quot; {
-  statement {
-    actions = [&quot;sts:AssumeRoleWithWebIdentity&quot;]
-    principals {
-      type        = &quot;Federated&quot;
-      identifiers = [module.eks.oidc_provider_arn]
-    }
-    condition {
-      test     = &quot;StringEquals&quot;
-      variable = &quot;${module.eks.oidc_provider}:sub&quot;
-      values   = [&quot;system:serviceaccount:llm:infer&quot;]
-    }
-  }
-}
-
-resource &quot;aws_iam_policy&quot; &quot;s3_read_model&quot; {
-  name        = &quot;llm-read-model-artifacts&quot;
-  description = &quot;Read‑only access to the model artifact bucket&quot;
-  policy = jsonencode({
-    Version = &quot;2012-10-17&quot;
-    Statement = [
-      {
-        Effect   = &quot;Allow&quot;
-        Action   = [&quot;s3:GetObject&quot;, &quot;s3:ListBucket&quot;]
-        Resource = [
-          aws_s3_bucket.model_artifacts.arn,
-          &quot;${aws_s3_bucket.model_artifacts.arn}/*&quot;
-        ]
-      }
-    ]
-  })
-}
-
-resource &quot;aws_iam_role_policy_attachment&quot; &quot;attach_s3&quot; {
-  role       = aws_iam_role.infer_pod_role.name
-  policy_arn = aws_iam_policy.s3_read_model.arn
-}
-</code></pre>
-<p><em>Key compliance notes</em>  </p>
+<h2>2️⃣ Overview &amp; Core Concepts</h2>
 <table>
 <thead>
 <tr>
-<th>Control</th>
-<th>How the IaC satisfies it</th>
+<th>Category</th>
+<th>Parameter</th>
+<th>Why it matters (DevOps lens)</th>
+<th>Typical values / considerations</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>ISO 27001 A.6.1</strong> (Segregation of duties)</td>
-<td>Separate IAM role per service account, least‑privilege policy.</td>
+<td><strong>Model</strong></td>
+<td>LLM family / size</td>
+<td>Drives GPU memory, compute, latency, cost</td>
+<td>GPT‑4‑32k (175 B), LLaMA‑2‑7B, Stable‑Vicuna‑13B</td>
 </tr>
 <tr>
-<td><strong>NIST CM‑6</strong> (Configuration change control)</td>
-<td>Terraform state stored in encrypted S3 with DynamoDB lock; all changes go through PR + OPA policy.</td>
+<td></td>
+<td>Framework</td>
+<td>Determines inference runtime, quantization support</td>
+<td>PyTorch + TorchServe, ONNX + ONNX Runtime, TensorFlow + TF‑Serving</td>
 </tr>
 <tr>
-<td><strong>SOC 2 CC6</strong> (Availability)</td>
-<td>Multi‑AZ node groups, spot‑interruption handler (Karpenter) and fallback on‑demand node pool (not shown).</td>
+<td></td>
+<td>Precision</td>
+<td>Trade‑off between latency, memory, accuracy</td>
+<td>fp16, bf16, int8 (post‑training quant)</td>
+</tr>
+<tr>
+<td></td>
+<td>Checkpoint location</td>
+<td>Immutable, versioned, auditable storage</td>
+<td>S3 (versioned bucket), GCS, Azure ML Registry, LakeFS</td>
+</tr>
+<tr>
+<td></td>
+<td>Model version</td>
+<td>Enables rollback, A/B testing, reproducibility</td>
+<td><code>v1.0.0</code>, <code>v2.1.3‑int8</code>, tag <code>baseline‑gpt4</code></td>
+</tr>
+<tr>
+<td><strong>Inference</strong></td>
+<td>Compute resource</td>
+<td>GPU type, CPU cores, memory per pod</td>
+<td>A100‑80GB, V100‑16GB, 48‑core Xeon</td>
+</tr>
+<tr>
+<td></td>
+<td>Container image</td>
+<td>Base OS, runtime libs, security posture</td>
+<td><code>nvcr.io/nvidia/pytorch:23.05-py3</code></td>
+</tr>
+<tr>
+<td></td>
+<td>Inference engine</td>
+<td>Low‑latency vs high‑throughput, batching</td>
+<td>Triton Inference Server, TorchServe, FastAPI + ONNX Runtime</td>
+</tr>
+<tr>
+<td></td>
+<td>Scaling strategy</td>
+<td>Horizontal (pods) vs vertical (multi‑GPU pod)</td>
+<td>K8s HPA, Karpenter, Spot Fleet, GPU‑node pools</td>
+</tr>
+<tr>
+<td></td>
+<td>SLA</td>
+<td>Latency &amp; throughput expectations</td>
+<td>&lt; 50 ms 99‑pctile, 1 k RPS</td>
+</tr>
+<tr>
+<td><strong>Observability</strong></td>
+<td>Metrics</td>
+<td>CPU/GPU, queue depth, token latency</td>
+<td>Prometheus, Grafana</td>
+</tr>
+<tr>
+<td></td>
+<td>Tracing</td>
+<td>End‑to‑end request flow, model inference time</td>
+<td>OpenTelemetry, Jaeger</td>
+</tr>
+<tr>
+<td></td>
+<td>Logging</td>
+<td>Structured, searchable, immutable</td>
+<td>Fluentd → Loki</td>
+</tr>
+<tr>
+<td></td>
+<td>Health checks</td>
+<td>Liveness / readiness, checksum validation</td>
+<td><code>/healthz</code>, <code>/readyz</code></td>
+</tr>
+<tr>
+<td><strong>Security</strong></td>
+<td>Network isolation</td>
+<td>VPC, pod‑security‑policy, private endpoints</td>
+<td>PrivateLink, Calico NetworkPolicy</td>
+</tr>
+<tr>
+<td></td>
+<td>IAM / least‑privilege</td>
+<td>Access to model artifacts &amp; infra</td>
+<td>EKS IAM role for ServiceAccount, S3 bucket policy</td>
+</tr>
+<tr>
+<td></td>
+<td>Encryption</td>
+<td>Data‑at‑rest &amp; in‑transit</td>
+<td>KMS‑managed keys, TLS 1.3</td>
+</tr>
+<tr>
+<td></td>
+<td>Audit logging</td>
+<td>Who accessed which model &amp; when</td>
+<td>CloudTrail, CloudWatch Logs, OpenTelemetry audit spans</td>
+</tr>
+<tr>
+<td><strong>Operational</strong></td>
+<td>CI/CD</td>
+<td>Automated build, test, rollout</td>
+<td>GitHub Actions → Argo CD → Argo Rollouts</td>
+</tr>
+<tr>
+<td></td>
+<td>Rollback &amp; blue‑green</td>
+<td>Zero‑downtime, fast recovery</td>
+<td>Canary + analysis, promotion to green</td>
+</tr>
+<tr>
+<td></td>
+<td>Cost monitoring</td>
+<td>Spot vs on‑demand, budget enforcement</td>
+<td>AWS Cost Explorer, Azure Cost Management</td>
+</tr>
+<tr>
+<td></td>
+<td>DR</td>
+<td>Multi‑AZ replication, snapshots</td>
+<td>EKS node groups in 3 AZs, S3 versioned backups</td>
+</tr>
+<tr>
+<td><strong>Governance</strong></td>
+<td>Model lineage</td>
+<td>Traceability from data → model → deployment</td>
+<td>MLflow tracking server, DVC, LakeFS</td>
+</tr>
+<tr>
+<td></td>
+<td>Bias / fairness testing</td>
+<td>Periodic audits, model‑card generation</td>
+<td>Custom Python audit script, scheduled CI job</td>
 </tr>
 </tbody>
 </table>
 <hr />
-<h3>2️⃣ Multi‑Stage Dockerfile (GPU‑aware, Distroless, Signed)</h3>
-<p></div>dockerfile</p>
-<h1>── Dockerfile</h1>
+<h2>3️⃣ End‑to‑End Architecture Diagram</h2>
+<div class="mermaid">
+graph TD
+subgraph CI[CI/CD Pipeline]
+        A[GitHub Repo] -->|push| B[GitHub Actions]
+B --> C[Docker Build (multi‑stage)]
+C --> D[Push image to ECR/AR]
+D --> E[Argo CD Sync]
+E --> F[Argo Rollouts Canary]
+end
+subgraph K8s[Production Cluster]
+        G[Ingress (ALB/NGINX)] --> H[LLM Service (svc)]
+H --> I[Deployment (GPU‑pod)]
+I --> J[Triton / TorchServe]
+J --> K[Model Checkpoint (CSI/Secret)]
+I --> L[Sidecar: Prometheus Exporter]
+I --> M[Sidecar: OpenTelemetry Collector]
+I --> N[Sidecar: Fluentd]
+I --> O[GPU Metrics Server]
+subgraph Autoscale
+            I --> P[HPA (custom metrics)]
+I --> Q[Karpenter NodePool (spot+on‑demand)]
+end
+end
+subgraph Observability
+R[Prometheus] --> S[Grafana Dashboards]
+M --> T[Jaeger UI]
+N --> U[Loki + Grafana Logs]
+end
+subgraph Security
+V[Secrets Store CSI] --> K
+        W[IAM Roles] --> G
+        X[NetworkPolicy] --> H
+end
+subgraph Governance
+Y[MLflow Registry] --> K
+        Z[Model Card Store] --> Y
+end
+</div>
+
+<p><em>All arrows represent data/control flow. The diagram is deliberately modular so each team can own a slice (e.g., Infra owns Karpenter, ML owns MLflow, Platform owns CI/CD).</em></p>
+<hr />
+<h2>4️⃣ Artifact &amp; Model Registry Management</h2>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Tool</th>
+<th>Recommended Settings</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Model storage</strong></td>
+<td><strong>Amazon S3 (versioned)</strong> or <strong>LakeFS</strong></td>
+<td>- Bucket encryption with KMS key <br> - <code>ObjectLock</code> for immutability <br> - Lifecycle rule: transition to Glacier after 30 days (archival)</td>
+</tr>
+<tr>
+<td><strong>Metadata &amp; lineage</strong></td>
+<td><strong>MLflow Tracking Server</strong> (hosted on EKS)</td>
+<td>- Register model with <code>mlflow.register_model()</code> <br> - Store checksum (<code>sha256</code>) as a tag <br> - Capture <code>git_commit</code>, <code>data_version</code>, <code>hyperparameters</code></td>
+</tr>
+<tr>
+<td><strong>Data versioning</strong></td>
+<td><strong>DVC</strong> (remote = S3)</td>
+<td>- <code>dvc add data/</code> <br> - <code>dvc push</code> <br> - Store <code>dvc.lock</code> in Git for reproducibility</td>
+</tr>
+<tr>
+<td><strong>Checksum verification</strong></td>
+<td><strong>sha256sum</strong> in CI</td>
+<td><code>bash\nsha256sum model.ckpt &gt; checksum.txt\n</code></td>
+</tr>
+<tr>
+<td><strong>Access control</strong></td>
+<td><strong>IAM policy</strong> attached to the EKS node role &amp; to the <code>model-registry</code> ServiceAccount via <strong>IRSA</strong></td>
+<td><code>json\n{\n  \"Effect\": \"Allow\",\n  \"Action\": [\"s3:GetObject\", \"s3:ListBucket\"],\n  \"Resource\": [\"arn:aws:s3:::ml-models\", \"arn:aws:s3:::ml-models/*\"]\n}\n</code></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Result:</strong> The model artifact is immutable, versioned, and auditable. All downstream pipelines can retrieve it via a <strong>CSI driver</strong> (see Section 5).</p>
+</blockquote>
+<hr />
+<h2>5️⃣ Multi‑Stage Docker Build</h2>
+<p>Below is a <strong>complete, production‑grade Dockerfile</strong> that builds a TorchServe‑based inference container, injects the model via a <strong>CSI driver</strong>, validates checksums, and hardens the image (CIS Docker Benchmark).  </p>
+<pre><code class="language-Dockerfile"># --------------------------------------------------------------
+# Stage 0 – Builder (PyTorch + TorchServe)
+# --------------------------------------------------------------
+FROM nvcr.io/nvidia/pytorch:23.05-py3 AS builder
+
+# 1️⃣ Install TorchServe &amp; dependencies (pinned versions)
+RUN pip install --no-cache-dir \
+    torch==2.2.0 \
+    torchvision==0.17.0 \
+    torchserve==0.9.2 \
+    torch-model-archiver==0.9.2 \
+    transformers==4.40.2 \
+    onnxruntime-gpu==1.18.0
+
+# 2️⃣ Create a non‑root user (CIS‑Docker #5.5)
+ARG USERNAME=appuser
+ARG UID=10001
+RUN adduser \
+    --disabled-password \
+    --gecos &quot;&quot; \
+    --home &quot;/home/${USERNAME}&quot; \
+    --shell &quot;/sbin/nologin&quot; \
+    --uid &quot;${UID}&quot; \
+    &quot;${USERNAME}&quot;
+
+# --------------------------------------------------------------
+# Stage 1 – Runtime (minimal, hardened)
+# --------------------------------------------------------------
+FROM nvidia/cuda:12.2.2-runtime-ubuntu22.04 AS runtime
+
+# 1️⃣ Install runtime deps only (no compilers)
+RUN apt-get update &amp;&amp; \
+    apt-get install -y --no-install-recommends \
+        ca-certificates \
+        curl \
+        libgomp1 \
+        libjemalloc2 &amp;&amp; \
+    rm -rf /var/lib/apt/lists/*
+
+# 2️⃣ Copy TorchServe binaries from builder
+COPY --from=builder /usr/local/bin/torchserve /usr/local/bin/
+COPY --from=builder /usr/local/bin/torch-model-archiver /usr/local/bin/
+COPY --from=builder /usr/local/lib/python3.10/dist-packages /opt/torchserve/python/
+
+# 3️⃣ Add non‑root user (same UID/GID as builder)
+ARG USERNAME=appuser
+ARG UID=10001
+RUN adduser \
+    --disabled-password \
+    --gecos &quot;&quot; \
+    --home &quot;/home/${USERNAME}&quot; \
+    --shell &quot;/sbin/nologin&quot; \
+    --uid &quot;${UID}&quot; \
+    &quot;${USERNAME}&quot;
+
+# 4️⃣ Create directories with proper permissions
+RUN mkdir -p /home/${USERNAME}/model-store &amp;&amp; \
+    chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}
+
+# 5️⃣ Switch to non‑root user
+USER ${USERNAME}
+WORKDIR /home/${USERNAME}
+
+# --------------------------------------------------------------
+# Stage 2 – Model injection (CSI driver mounts model at /model)
+# --------------------------------------------------------------
+# The model is **not** baked into the image. It will be mounted
+# at runtime via a CSI volume (see k8s manifest). The entrypoint
+# validates the checksum before starting TorchServe.
+
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+ENTRYPOINT [&quot;/usr/local/bin/entrypoint.sh&quot;]
+</code></pre>
+<h3><code>entrypoint.sh</code> (runtime verification)</h3>
+<p></div>bash</p>
+<h1>!/usr/bin/env bash</h1>
+<p>set -euo pipefail</p>
+<p>MODEL_DIR="/model"
+CHECKSUM_FILE="${MODEL_DIR}/checksum.txt"
+EXPECTED=$(cat "${CHECKSUM_FILE}")</p>
+<h1>Compute checksum of the checkpoint file (assumes single .ckpt)</h1>
+<p>ACTUAL=$(sha256sum "${MODEL_DIR}"/*.ckpt | awk '{print $1}')</p>
+<p>if [[ "${EXPECTED}" != "${ACTUAL}" ]]; then
+  echo "❌ Model checksum mismatch! Expected ${EXPECTED}, got ${ACTUAL}"
+  exit 1
+fi</p>
+<h1>Archive model for TorchServe</h1>
+<p>torch-model-archiver \
+  --model-name llm \
+  --version 1.0 \
+  --serialized-file "${MODEL_DIR}"/*.ckpt \
+  --handler transformers_handler.py \
+  --extra-files "${MODEL_DIR}/config.json,${MODEL</p>
 <h2>📊 System Architecture Visual Map</h2>
 <div class="mermaid">
 flowchart TD
-    subgraph "1️⃣ Input Layer"
-        A[User Query] --> B[API Gateway]
-    end
-
-    subgraph "2️⃣ Pre‑processing"
-        B --> C[Request Validation]
-        C --> D[Sanitization & Sanitizing]
-        D --> E[Tokenization Engine]
-    end
-
-    subgraph "3️⃣ Embedding & Contextualization"
-        E --> F[Word & Sub‑word Embeddings]
-        F --> G[Position & Segment Embeddings]
-        G --> H[Attention Masking]
-    end
-
-    subgraph "4️⃣ Core LLM (Transformer)"
-        H --> I[Multi‑Head Self‑Attention]
-        I --> J[Layer Normalization & Residuals]
-        J --> K[Feed‑Forward Networks]
-        K --> L[Output Logits]
-    end
-
-    subgraph "5️⃣ Post‑processing"
-        L --> M[Temperature Sampling / Top‑K / Top‑P]
-        M --> N[Detokenization]
-        N --> O[Answer Formatting]
-    end
-
-    subgraph "6️⃣ Response Delivery"
-        O --> P[API Response]
-        P --> Q[Client UI]
-    end
-
-    subgraph "7️⃣ Ops & Observability"
-        P --> R[Logging & Metrics]
-        R --> S[Alerting / Anomaly Detection]
-    end
-
-    click A "https://example.com/docs/query-format" "Query Format"
-    click B "https://example.com/docs/api-gateway" "API Gateway"
-    click I "https://example.com/docs/transformer" "Transformer Architecture"
-    click M "https://example.com/docs/sampling" "Sampling Strategies"
+subgraph INPUT["Input & Prompt Construction"]
+        A[User Query] --> B[Prompt Template Engine]
+B --> C[Tokenization]
+end
+subgraph LLM["Large Language Model"]
+C --> D[LLM Inference (e.g., GPT‑4)]
+D --> E[Decoding Strategy]
+end
+subgraph POST["Post‑processing & Output"]
+E --> F[Answer Extraction]
+F --> G[Formatting & Validation]
+G --> H[Response Delivery]
+end
+    H --> I[End]
 </div>
 </article>
 
-<!-- Core High-Availability Standalone Non-Module Vector Flowchart Engine Script Bundle (FIXED: v9.4.3 Stack) -->
-<script src="https://cloudflare.com"></script>
+<!-- Mermaid.js Flowchart Rendering Engine -->
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 <script>
   if (typeof mermaid !== 'undefined') {{
     mermaid.initialize({{ 
