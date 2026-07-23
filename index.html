@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ABCD Architectural Parameter Extraction Guide</title>
+<title>DevOps‑Driven Lens on “Basics of LLM”</title>
 <meta name="description" content="Automated system blueprint architecture layout.">
 
 <!-- Core Visual Optimization Engines -->
@@ -132,466 +132,414 @@
 <div class="fixed bottom-12 right-1/4 w-[400px] h-[400px] bg-slate-100 rounded-full mix-blend-multiply filter blur-3xl opacity-50 pointer-events-none"></div>
 
 <article class="article-card max-w-4xl mx-auto px-6 sm:px-16 py-16 rounded-2xl prose prose-slate">
-<h1>📘 ABCD Architectural Parameter Extraction Guide</h1>
-<p><strong>Version:</strong> <code>1.2.0</code> | <strong>Status:</strong> <code>reviewed</code> | <strong>Last Updated:</strong> <code>2026‑07‑23</code>  </p>
+<h1>📚 DevOps‑Driven Lens on “Basics of LLM”</h1>
+<p><strong>Goal:</strong> Extract the <em>core architectural parameters</em> a DevOps engineer must plan, build, and operate an LLM‑based inference service – and provide a <strong>production‑ready</strong> blueprint (IaC, multi‑stage Docker, CI/CD, K8s manifests, env‑var schema, observability, security, cost, resiliency, governance).  </p>
 <hr />
-<h2>📄 Metadata (YAML Front‑Matter)</h2>
-<pre><code class="language-yaml">---
-title: &quot;ABCD Architectural Parameter Extraction Guide&quot;
-version: &quot;1.2.0&quot;
-status: &quot;reviewed&quot;          # draft | reviewed | deprecated
-last_updated: &quot;2026-07-23&quot;
-authors:
-  - name: &quot;DevOps Center of Excellence&quot;
-    email: &quot;devops@company.com&quot;
-license: &quot;Apache-2.0&quot;
-change_log:
-  - version: &quot;1.2.0&quot;
-    date: &quot;2026-07-23&quot;
-    changes:
-      - &quot;Added full multi‑stage Dockerfiles (prod &amp; debug).&quot;
-      - &quot;Implemented Helm chart with values, templates, and tests.&quot;
-      - &quot;Created GitHub Actions CI/CD pipeline with image scanning &amp; approvals.&quot;
-      - &quot;Introduced weight.py implementation, unit‑test suite, and coverage badge.&quot;
-      - &quot;Expanded security, logging, monitoring, and disaster‑recovery sections.&quot;
-      - &quot;Added documentation‑linting workflow and accessibility guidelines.&quot;
-  - version: &quot;1.1.0&quot;
-    date: &quot;2026-04-12&quot;
-    changes:
-      - &quot;Added JSON schema validation step using ajv‑cli.&quot;
-      - &quot;Provided parser.py example with spaCy intent detection.&quot;
-      - &quot;Inserted Mermaid diagram rendering CI job.&quot;
-  - version: &quot;1.0.0&quot;
-    date: &quot;2026-01-15&quot;
-    changes:
-      - &quot;Initial release – core architecture, weighting engine, and high‑level flow.&quot;
----
-</code></pre>
-<blockquote>
-<p><strong>Semantic Versioning Policy</strong><br />
-<em>Major</em> – breaking changes to the public API (e.g., <code>parser.py</code> signature).<br />
-<em>Minor</em> – new features, additional artefacts, or backward‑compatible enhancements.<br />
-<em>Patch</em> – bug fixes, documentation tweaks, or test coverage improvements.  </p>
-</blockquote>
-<p>All downstream artefacts (Docker tags, Helm chart versions, API contracts) inherit the same <code>MAJOR.MINOR.PATCH</code> identifier.</p>
+<h2>Table of Contents</h2>
+<ol>
+<li><a href="#why-a-devops-view-matters">Why a DevOps View Matters</a>  </li>
+<li><a href="#core-architectural-parameters">Core Architectural Parameters</a>  </li>
+<li>[End‑to‑End Implementation Flow]  </li>
+<li>3.1 Infrastructure as Code (Terraform)  </li>
+<li>3.2 Multi‑Stage Docker Build &amp; Image Hardening  </li>
+<li>3.3 CI/CD Pipeline (GitHub Actions + Argo CD / Argo Rollouts)  </li>
+<li>3.4 Kubernetes Manifests (Serving, Autoscaling, Security)  </li>
+<li>3.5 Observability &amp; Monitoring Stack  </li>
+<li>3.6 Security &amp; Secrets Management  </li>
+<li>3.7 Cost‑Optimization &amp; FinOps Dashboard  </li>
+<li>3.8 Resilience, DR &amp; Zero‑Downtime Upgrades  </li>
+<li>3.9 Governance, Auditing &amp; Model‑Version Traceability  </li>
+<li><a href="#environment-variable-schema">Environment‑Variable Schema (YAML)</a>  </li>
+<li><a href="#glossary">Glossary of DevOps‑Centric Terms</a>  </li>
+<li><a href="#references">References &amp; Further Reading</a>  </li>
+</ol>
 <hr />
-<h2>📚 Table of Contents</h2>
+<h2>1️⃣ Why a DevOps View Matters</h2>
+<table>
+<thead>
+<tr>
+<th>Concern</th>
+<th>DevOps Impact</th>
+<th>Typical Failure Mode</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Compute footprint</strong></td>
+<td>Determines node‑type, autoscaling, spot‑vs‑on‑demand mix</td>
+<td>OOM, GPU under‑utilisation</td>
+</tr>
+<tr>
+<td><strong>Model lifecycle</strong></td>
+<td>Versioned artifacts, reproducible builds</td>
+<td>Model‑drift, “unknown” checkpoint</td>
+</tr>
+<tr>
+<td><strong>Observability</strong></td>
+<td>Latency spikes, GPU saturation, request‑level tracing</td>
+<td>SLA breach, silent failures</td>
+</tr>
+<tr>
+<td><strong>Security</strong></td>
+<td>Secrets leakage, unauthorized inference</td>
+<td>Data‑exfiltration, compliance fines</td>
+</tr>
+<tr>
+<td><strong>Cost</strong></td>
+<td>GPU hours dominate spend</td>
+<td>Budget overruns, idle nodes</td>
+</tr>
+<tr>
+<td><strong>Resilience</strong></td>
+<td>Multi‑AZ, backup, graceful degradation</td>
+<td>Outage, loss of checkpoints</td>
+</tr>
+<tr>
+<td><strong>Governance</strong></td>
+<td>Audit trails, data residency</td>
+<td>Regulatory penalties</td>
+</tr>
+</tbody>
+</table>
+<p>A disciplined DevOps approach makes each of these <em>predictable</em> and <em>automatable</em>.</p>
+<hr />
+<h2>2️⃣ Core Architectural Parameters</h2>
 <table>
 <thead>
 <tr>
 <th>#</th>
-<th>Section</th>
+<th>Parameter</th>
+<th>Why It Matters for DevOps</th>
+<th>Reference Implementation</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>1</td>
-<td><a href="#prerequisites-input-schema">Prerequisites &amp; Input Schema</a></td>
+<td><strong>1</strong></td>
+<td><strong>Model Size &amp; Precision</strong> (e.g., 124 M params, FP16 vs INT8)</td>
+<td>Drives GPU memory, batch size, latency vs throughput trade‑offs.</td>
+<td><code>torch.compile(..., mode="max-autotune")</code> + <code>torch.quantization</code></td>
 </tr>
 <tr>
-<td>2</td>
-<td><a href="#abcd-taxonomy-definition">ABCD Taxonomy Definition</a></td>
+<td><strong>2</strong></td>
+<td><strong>Compute Platform</strong> (GPU = NVIDIA A100, V100; TPU; CPU)</td>
+<td>Determines node pool, pricing, driver stack, and container base image.</td>
+<td>Terraform <code>google_container_node_pool</code> with <code>accelerator_type = "nvidia-tesla-a100"</code></td>
 </tr>
 <tr>
-<td>3</td>
-<td><a href="#weighting-engine-weightpy">Weighting Engine (<code>weight.py</code>)</a></td>
+<td><strong>3</strong></td>
+<td><strong>Inference Mode</strong> (real‑time, micro‑batch, async)</td>
+<td>Affects request routing, batching config, HPA thresholds.</td>
+<td>Triton <code>--model-batch-size 8</code> + KEDA scaling on queue depth</td>
 </tr>
 <tr>
-<td>4</td>
-<td><a href="#parsing-strategy--tooling-parserpy">Parsing Strategy &amp; Tooling (<code>parser.py</code>)</a></td>
+<td><strong>4</strong></td>
+<td><strong>Container Image</strong> (multi‑stage, GPU‑ready, SBOM, signed)</td>
+<td>Guarantees reproducibility, vulnerability control, runtime security.</td>
+<td>Dockerfile (see §3.2) → <code>cosign sign</code></td>
 </tr>
 <tr>
-<td>5</td>
-<td><a href="#artefact-generation">Artefact Generation</a></td>
+<td><strong>5</strong></td>
+<td><strong>Orchestration &amp; Autoscaling</strong> (K8s, KEDA, HPA, VPA)</td>
+<td>Guarantees elasticity, high‑availability, cost‑control.</td>
+<td><code>HorizontalPodAutoscaler</code> on <code>gpu_utilization</code> metric</td>
 </tr>
 <tr>
-<td>5.1</td>
-<td>Dockerfile – Production</td>
+<td><strong>6</strong></td>
+<td><strong>Model Artifact Store &amp; Versioning</strong> (S3/GCS, MLflow, DVC)</td>
+<td>Immutable, traceable checkpoints; enables rollback.</td>
+<td><code>mlflow register-model</code> + bucket lifecycle</td>
 </tr>
 <tr>
-<td>5.2</td>
-<td>Dockerfile.debug – Development</td>
+<td><strong>7</strong></td>
+<td><strong>Pre‑/Post‑Processing Pipelines</strong> (tokenizer, detokenizer, safety filters)</td>
+<td>Must be packaged, monitored, and can become bottlenecks.</td>
+<td>Prefect flow deployed as side‑car container</td>
 </tr>
 <tr>
-<td>5.3</td>
-<td>Helm Chart (values.yaml, templates)</td>
+<td><strong>8</strong></td>
+<td><strong>CI/CD Pipeline</strong> (IaC, image build, tests, promotion)</td>
+<td>End‑to‑end automation, gate‑keeping, canary rollouts.</td>
+<td>GitHub Actions + Argo Rollouts</td>
 </tr>
 <tr>
-<td>5.4</td>
-<td>Kubernetes Manifest (Deployment, Service, Probes)</td>
+<td><strong>9</strong></td>
+<td><strong>Observability</strong> (metrics, logs, traces, GPU stats)</td>
+<td>Early detection of latency, OOM, drift.</td>
+<td>Prometheus + Grafana + Loki + OpenTelemetry + <code>nvidia-dcgm-exporter</code></td>
 </tr>
 <tr>
-<td>6</td>
-<td><a href="#cicd-pipeline-github-actions">CI/CD Pipeline (GitHub Actions)</a></td>
+<td><strong>10</strong></td>
+<td><strong>Security &amp; Compliance</strong> (secrets, RBAC, network policies, image signing)</td>
+<td>Prevent data leakage, meet GDPR/HIPAA.</td>
+<td>Vault‑K8s auth, OPA Gatekeeper, Kyverno</td>
 </tr>
 <tr>
-<td>7</td>
-<td><a href="#security--compliance">Security &amp; Compliance</a></td>
+<td><strong>11</strong></td>
+<td><strong>Cost &amp; FinOps</strong> (spot‑instance mix, cost‑per‑inference, budgets)</td>
+<td>Keeps spend predictable.</td>
+<td>Cloud Billing Export → Grafana panel</td>
 </tr>
 <tr>
-<td>8</td>
-<td><a href="#logging--monitoring">Logging &amp; Monitoring</a></td>
+<td><strong>12</strong></td>
+<td><strong>Resilience &amp; DR</strong> (multi‑AZ, backup, chaos testing)</td>
+<td>Guarantees service continuity.</td>
+<td>Velero backups, Chaos‑Mesh experiments</td>
 </tr>
 <tr>
-<td>9</td>
-<td><a href="#governance--change-management">Governance &amp; Change Management</a></td>
+<td><strong>13</strong></td>
+<td><strong>Deployment Pattern</strong> (blue‑green, canary, A/B)</td>
+<td>Reduces risk of regressions.</td>
+<td>Argo Rollouts with metric analysis</td>
 </tr>
 <tr>
-<td>10</td>
-<td><a href="#documentation-standards--linting">Documentation Standards &amp; Linting</a></td>
+<td><strong>14</strong></td>
+<td><strong>Model Quality Monitoring</strong> (drift, hallucination, latency SLA)</td>
+<td>Detects degradation before it hits users.</td>
+<td>Evidently + custom drift detector</td>
 </tr>
 <tr>
-<td>11</td>
-<td><a href="#licensing">Licensing</a></td>
-</tr>
-<tr>
-<td>12</td>
-<td><a href="#runbook--disaster-recovery">Run‑book &amp; Disaster Recovery</a></td>
-</tr>
-<tr>
-<td>13</td>
-<td><a href="#metrics-sla--alerting">Metrics, SLA &amp; Alerting</a></td>
-</tr>
-<tr>
-<td>14</td>
-<td><a href="#mermaid-diagrams--ci-rendering">Mermaid Diagrams &amp; CI Rendering</a></td>
-</tr>
-<tr>
-<td>15</td>
-<td><a href="#accessibility--formatting">Accessibility &amp; Formatting</a></td>
-</tr>
-<tr>
-<td>16</td>
-<td><a href="#cross-references--hyperlinks">Cross‑References &amp; Hyperlinks</a></td>
-</tr>
-<tr>
-<td>17</td>
-<td><a href="#test-coverage--automation">Test Coverage &amp; Automation</a></td>
-</tr>
-<tr>
-<td>18</td>
-<td><a href="#error-handling--feedback-loop">Error Handling &amp; Feedback Loop</a></td>
-</tr>
-<tr>
-<td>19</td>
-<td><a href="#appendix-example-request--extraction">Appendix – Example Request &amp; Extraction Walk‑through</a></td>
-</tr>
-<tr>
-<td>20</td>
-<td><a href="#contact--support">Contact &amp; Support</a></td>
+<td><strong>15</strong></td>
+<td><strong>Governance &amp; Auditing</strong> (audit logs, data‑residency tags)</td>
+<td>Satisfies internal &amp; external policy.</td>
+<td>OPA policies + immutable S3 bucket versioning</td>
 </tr>
 </tbody>
 </table>
-<blockquote>
-<p><strong>Note:</strong> All internal anchors use kebab‑case (e.g., <code>#prerequisites-input-schema</code>).  </p>
-</blockquote>
 <hr />
-<h2>1️⃣ Prerequisites &amp; Input Schema <a name="prerequisites-input-schema"></a></h2>
-<h3>1.1 Required Tools</h3>
-<table>
-<thead>
-<tr>
-<th>Tool</th>
-<th>Version</th>
-<th>Usage</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>docker</code></td>
-<td><code>≥ 24.0</code></td>
-<td>Multi‑stage builds</td>
-</tr>
-<tr>
-<td><code>helm</code></td>
-<td><code>≥ 3.12</code></td>
-<td>Chart packaging &amp; release</td>
-</tr>
-<tr>
-<td><code>kubectl</code></td>
-<td><code>≥ 1.28</code></td>
-<td>Manifest validation</td>
-</tr>
-<tr>
-<td><code>node</code> + <code>npm</code></td>
-<td><code>≥ 20</code></td>
-<td><code>ajv-cli</code> for JSON schema validation</td>
-</tr>
-<tr>
-<td><code>python</code></td>
-<td><code>≥ 3.11</code></td>
-<td>Parsing &amp; weighting scripts</td>
-</tr>
-<tr>
-<td><code>spaCy</code></td>
-<td><code>≥ 3.7</code></td>
-<td>Intent detection</td>
-</tr>
-<tr>
-<td><code>trivy</code></td>
-<td><code>≥ 0.48</code></td>
-<td>Image vulnerability scanning</td>
-</tr>
-<tr>
-<td><code>github-cli</code></td>
-<td><code>≥ 2.30</code></td>
-<td>Optional local CI debugging</td>
-</tr>
-</tbody>
-</table>
-<h3>1.2 JSON Input Schema</h3>
-<pre><code class="language-json">{
-  &quot;$schema&quot;: &quot;http://json-schema.org/draft-07/schema#&quot;,
-  &quot;title&quot;: &quot;ABCD Extraction Request&quot;,
-  &quot;type&quot;: &quot;object&quot;,
-  &quot;required&quot;: [&quot;request_id&quot;, &quot;description&quot;, &quot;priority&quot;, &quot;constraints&quot;],
-  &quot;properties&quot;: {
-    &quot;request_id&quot;: { &quot;type&quot;: &quot;string&quot;, &quot;pattern&quot;: &quot;^[A-Z0-9_-]{6,}$&quot; },
-    &quot;description&quot;: { &quot;type&quot;: &quot;string&quot;, &quot;minLength&quot;: 20 },
-    &quot;priority&quot;: { &quot;type&quot;: &quot;integer&quot;, &quot;minimum&quot;: 1, &quot;maximum&quot;: 5 },
-    &quot;constraints&quot;: {
-      &quot;type&quot;: &quot;object&quot;,
-      &quot;properties&quot;: {
-        &quot;sla_uptime&quot;: { &quot;type&quot;: &quot;string&quot;, &quot;enum&quot;: [&quot;99.9&quot;, &quot;99.99&quot;, &quot;99.999&quot;] },
-        &quot;budget_usd&quot;: { &quot;type&quot;: &quot;number&quot;, &quot;minimum&quot;: 0 },
-        &quot;compliance&quot;: {
-          &quot;type&quot;: &quot;array&quot;,
-          &quot;items&quot;: { &quot;type&quot;: &quot;string&quot;, &quot;enum&quot;: [&quot;GDPR&quot;, &quot;PCI-DSS&quot;, &quot;HIPAA&quot;] }
-        }
-      },
-      &quot;additionalProperties&quot;: false
-    },
-    &quot;metadata&quot;: {
-      &quot;type&quot;: &quot;object&quot;,
-      &quot;properties&quot;: {
-        &quot;requested_by&quot;: { &quot;type&quot;: &quot;string&quot; },
-        &quot;requested_at&quot;: { &quot;type&quot;: &quot;string&quot;, &quot;format&quot;: &quot;date-time&quot; }
-      },
-      &quot;required&quot;: [&quot;requested_by&quot;, &quot;requested_at&quot;]
+<h2>3️⃣ End‑to‑End Implementation Flow</h2>
+<h3>3.1 Infrastructure as Code (Terraform)</h3>
+<pre><code class="language-hcl"># ──────────────────────────────────────────────────────────────
+# 1️⃣ GKE Cluster (multi‑AZ, GPU node pool)
+# ──────────────────────────────────────────────────────────────
+provider &quot;google&quot; {
+  project = var.gcp_project
+  region  = var.gcp_region
+}
+
+resource &quot;google_container_cluster&quot; &quot;llm_cluster&quot; {
+  name               = &quot;llm-inference&quot;
+  location           = var.gcp_region
+  remove_default_node_pool = true
+  initial_node_count = 1
+
+  # Enable Workload Identity for Vault ↔ K8s secret injection
+  workload_identity_config {
+    identity_namespace = &quot;${var.gcp_project}.svc.id.goog&quot;
+  }
+}
+
+resource &quot;google_container_node_pool&quot; &quot;gpu_pool&quot; {
+  name       = &quot;gpu-pool&quot;
+  cluster    = google_container_cluster.llm_cluster.name
+  location   = var.gcp_region
+  node_count = var.gpu_node_count
+
+  node_config {
+    machine_type = &quot;n1-standard-8&quot;
+    # Spot (preemptible) with on‑demand fallback
+    preemptible  = true
+    # Attach NVIDIA A100 GPU
+    accelerators {
+      type  = &quot;nvidia-tesla-a100&quot;
+      count = 1
     }
-  },
-  &quot;additionalProperties&quot;: false
+    # Install NVIDIA driver automatically
+    guest_accelerator {
+      type  = &quot;nvidia-tesla-a100&quot;
+      count = 1
+    }
+    # Enable GPU device plugin
+    metadata = {
+      disable-legacy-endpoints = &quot;true&quot;
+    }
+    oauth_scopes = [
+      &quot;https://www.googleapis.com/auth/cloud-platform&quot;
+    ]
+    labels = {
+      &quot;gpu&quot; = &quot;a100&quot;
+    }
+    taint {
+      key    = &quot;nvidia.com/gpu&quot;
+      value  = &quot;present&quot;
+      effect = &quot;NO_SCHEDULE&quot;
+    }
+  }
+
+  autoscaling {
+    min_node_count = 1
+    max_node_count = 8
+  }
 }
 </code></pre>
-<h3>1.3 CI Validation Step</h3>
-<pre><code class="language-yaml"># .github/workflows/validate-input.yml
-name: Validate Request Payload
-on:
+<p><em>Key points</em>  </p>
+<ul>
+<li><strong>Node‑selector &amp; taint</strong> – Guarantees only GPU‑enabled pods land on these nodes.  </li>
+<li><strong>Preemptible (spot) mix</strong> – Reduces cost; fallback to on‑demand via <code>node_pool</code> <code>autoscaling</code> policy.  </li>
+<li><strong>Workload Identity</strong> – Removes static service‑account keys; Vault injects secrets via K8s service accounts.</li>
+</ul>
+<hr />
+<h3>3.2 Multi‑Stage Docker Build &amp; Image Hardening</h3>
+<pre><code class="language-dockerfile"># ──────────────────────────────────────────────────────────────
+# 1️⃣ Build stage – compile model, create SBOM
+# ──────────────────────────────────────────────────────────────
+FROM nvidia/cuda:12.1.1-base-ubuntu22.04 AS builder
+
+# Install OS deps
+RUN apt-get update &amp;&amp; apt-get install -y --no-install-recommends \
+    python3-pip python3-venv git curl &amp;&amp; \
+    rm -rf /var/lib/apt/lists/*
+
+# Create a non‑root user
+ARG USERNAME=appuser
+ARG UID=10001
+RUN adduser --disabled-password --gecos &quot;&quot; --uid ${UID} ${USERNAME}
+
+# Virtual env for reproducibility
+ENV VENV=/opt/venv
+RUN python3 -m venv ${VENV}
+ENV PATH=&quot;${VENV}/bin:$PATH&quot;
+
+# Install Python deps (GPU‑enabled torch)
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt \
+    &amp;&amp; pip install --no-cache-dir torch==2.2.0+cu121 -f https://download.pytorch.org/whl/torch_stable.html
+
+# Pull model checkpoint (example: distilbert-base-uncased)
+RUN pip install huggingface_hub &amp;&amp; \
+    python - &lt;&lt;'PY'
+from huggingface_hub import snapshot_download
+snapshot_download(repo_id=&quot;distilbert-base-uncased&quot;, local_dir=&quot;/model&quot;)
+PY
+
+# Generate SBOM (CycloneDX) and sign it
+RUN pip install cyclonedx-bom &amp;&amp; \
+    cyclonedx-bom -r . -o /sbom/cyclonedx.json
+
+# ──────────────────────────────────────────────────────────────
+# 2️⃣ Runtime stage – minimal, GPU‑ready, signed, non‑root
+# ──────────────────────────────────────────────────────────────
+FROM nvidia/cuda:12.1.1-runtime-ubuntu22.04 AS runtime
+
+# Install runtime deps only
+RUN apt-get update &amp;&amp; apt-get install -y --no-install-recommends \
+    python3-venv &amp;&amp; \
+    rm -rf /var/lib/apt/lists/*
+
+# Copy venv and model from builder
+COPY --from=builder /opt/venv /opt/venv
+COPY --from=builder /model /app/model
+COPY --from=builder /sbom /app/sbom
+
+ENV PATH=&quot;/opt/venv/bin:$PATH&quot;
+WORKDIR /app
+
+# Add non‑root user (same UID/GID as builder)
+ARG USERNAME=appuser
+ARG UID=10001
+RUN adduser --disabled-password --gecos &quot;&quot; --uid ${UID} ${USERNAME}
+USER ${USERNAME}
+
+# Runtime entrypoint (Triton or TorchServe wrapper)
+COPY entrypoint.sh .
+ENTRYPOINT [&quot;./entrypoint.sh&quot;]
+
+# ----------------------------------------------------------------
+# Image hardening metadata
+# ----------------------------------------------------------------
+LABEL org.opencontainers.image.source=&quot;https://github.com/yourorg/llm-inference&quot;
+LABEL org.opencontainers.image.created=&quot;${BUILD_DATE}&quot;
+LABEL org.opencontainers.image.version=&quot;${VERSION}&quot;
+LABEL org.opencontainers.image.licenses=&quot;Apache-2.0&quot;
+LABEL org.opencontainers.image.title=&quot;llm‑inference‑gpu&quot;
+LABEL org.opencontainers.image.base.name=&quot;nvidia/cuda:12.1.1-runtime-ubuntu22.04&quot;
+
+# Add seccomp &amp; AppArmor profiles (mounted at runtime)
+# (see ./security/ directory for the actual JSON/profile files)
+</code></pre>
+<p><strong>What the Dockerfile solves</strong></p>
+<table>
+<thead>
+<tr>
+<th>Requirement</th>
+<th>How it’s addressed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>GPU‑ready base</strong></td>
+<td><code>nvidia/cuda:12.1.1-runtime</code> + <code>torch</code> compiled for CUDA 12.1</td>
+</tr>
+<tr>
+<td><strong>Multi‑stage</strong></td>
+<td>Build‑time heavy deps are discarded → ~300 MB runtime image</td>
+</tr>
+<tr>
+<td><strong>SBOM &amp; Signing</strong></td>
+<td><code>cyclonedx-bom</code> + <code>cosign sign</code> (CI step)</td>
+</tr>
+<tr>
+<td><strong>Non‑root</strong></td>
+<td><code>appuser</code> UID 10001, no root privileges</td>
+</tr>
+<tr>
+<td><strong>Runtime security</strong></td>
+<td>Labels for <code>seccomp</code>/<code>apparmor</code> profiles; can be enforced by OPA/Kyverno</td>
+</tr>
+<tr>
+<td><strong>Deterministic env</strong></td>
+<td>Virtualenv, pinned versions, reproducible <code>requirements.txt</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>3.3 CI/CD Pipeline</h3>
+<h4>3.3.1 GitHub Actions (Build → Test → Sign → Push)</h4>
+<p></div>yaml
+name: LLM‑Inference CI/CD</p>
+<p>on:
+  push:
+    branches: [ main ]
   pull_request:
-    paths:
-      - 'requests/**/*.json'
-
-jobs:
-  validate:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Install ajv-cli
-        run: npm i -g ajv-cli
-      - name: Validate JSON payloads
-        run: |
-          for f in requests/**/*.json; do
-            ajv-cli validate -s schema/request-schema.json -d &quot;$f&quot; --strict || exit 1
-          done
-</code></pre>
-<blockquote>
-<p><strong>Result:</strong> Any schema violation blocks the PR merge and posts a detailed comment (see <em>Error Handling</em>).</p>
-</blockquote>
-<hr />
-<h2>2️⃣ ABCD Taxonomy Definition <a name="abcd-taxonomy-definition"></a></h2>
-<table>
-<thead>
-<tr>
-<th>Letter</th>
-<th>Dimension</th>
-<th>Typical Metrics / Artefacts</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>A</strong></td>
-<td><strong>Availability</strong></td>
-<td>Uptime %, fail‑over topology, health‑check endpoints, MTTR</td>
-</tr>
-<tr>
-<td><strong>B</strong></td>
-<td><strong>Business‑Criticality / Cost</strong></td>
-<td>Budget caps, ROI, scaling limits, cost‑per‑request</td>
-</tr>
-<tr>
-<td><strong>C</strong></td>
-<td><strong>Compliance / Security</strong></td>
-<td>Regulatory frameworks (GDPR, PCI‑DSS), CVE thresholds, audit logs</td>
-</tr>
-<tr>
-<td><strong>D</strong></td>
-<td><strong>Deployment / DevOps‑ability</strong></td>
-<td>CI/CD pipeline maturity, IaC, rollback strategy, observability</td>
-</tr>
-</tbody>
-</table>
-<p>These dimensions drive the <strong>weighting engine</strong> (Section 3) and the <strong>extraction checklist</strong> (Appendix).</p>
-<hr />
-<h2>3️⃣ Weighting Engine (<code>weight.py</code>) <a name="weighting-engine-weightpy"></a></h2>
-<h3>3.1 Public API</h3>
-<pre><code class="language-python"># weight.py
-from typing import Dict, Any
-
-def compute_score(payload: Dict[str, Any]) -&gt; Dict[str, int]:
-    &quot;&quot;&quot;
-    Returns a dict with per‑letter scores (0‑100) and a total weighted score.
-    Example:
-        {&quot;A&quot;: 92, &quot;B&quot;: 78, &quot;C&quot;: 85, &quot;D&quot;: 90, &quot;total&quot;: 86}
-    &quot;&quot;&quot;
-    ...
-</code></pre>
-<h3>3.2 Implementation (excerpt)</h3>
-<pre><code class="language-python"># weight.py
-import math
-
-# Default weight configuration – can be overridden via env vars or a YAML file.
-DEFAULT_WEIGHTS = {&quot;A&quot;: 0.30, &quot;B&quot;: 0.20, &quot;C&quot;: 0.25, &quot;D&quot;: 0.25}
-
-def _score_availability(payload):
-    sla = payload[&quot;constraints&quot;].get(&quot;sla_uptime&quot;, &quot;99.9&quot;)
-    mapping = {&quot;99.9&quot;: 90, &quot;99.99&quot;: 95, &quot;99.999&quot;: 99}
-    return mapping.get(sla, 80)
-
-def _score_business(payload):
-    budget = payload[&quot;constraints&quot;].get(&quot;budget_usd&quot;, 0)
-    # Simple inverse relationship: higher budget → lower score (cost pressure)
-    return max(0, 100 - math.log1p(budget) * 10)
-
-def _score_compliance(payload):
-    comps = payload[&quot;constraints&quot;].get(&quot;compliance&quot;, [])
-    return 100 if not comps else 100 - len(comps) * 10
-
-def _score_deployment(payload):
-    # Priority 5 (critical) gets higher score.
-    return 70 + payload[&quot;priority&quot;] * 6
-
-def compute_score(payload: dict) -&gt; dict:
-    scores = {
-        &quot;A&quot;: _score_availability(payload),
-        &quot;B&quot;: _score_business(payload),
-        &quot;C&quot;: _score_compliance(payload),
-        &quot;D&quot;: _score_deployment(payload),
-    }
-    total = round(sum(scores[l] * DEFAULT_WEIGHTS[l] for l in scores))
-    scores[&quot;total&quot;] = total
-    return scores
-</code></pre>
-<h3>3.3 Testing &amp; Coverage</h3>
-<pre><code class="language-bash"># Run tests
-pytest tests/test_weight.py --cov=weight --cov-report=term-missing
-</code></pre>
-<p><em>Coverage target:</em> <strong>≥ 90 %</strong> (branch coverage included).  </p>
-<p><strong>Sample test (<code>tests/test_weight.py</code>):</strong></p>
-<pre><code class="language-python">import pytest
-from weight import compute_score
-
-@pytest.fixture
-def sample_payload():
-    return {
-        &quot;request_id&quot;: &quot;REQ123&quot;,
-        &quot;description&quot;: &quot;Need 99.99% uptime for payment service.&quot;,
-        &quot;priority&quot;: 5,
-        &quot;constraints&quot;: {&quot;sla_uptime&quot;: &quot;99.99&quot;, &quot;budget_usd&quot;: 5000, &quot;compliance&quot;: [&quot;PCI-DSS&quot;]},
-        &quot;metadata&quot;: {&quot;requested_by&quot;: &quot;alice&quot;, &quot;requested_at&quot;: &quot;2026-07-20T12:00:00Z&quot;},
-    }
-
-def test_compute_score(sample_payload):
-    scores = compute_score(sample_payload)
-    assert scores[&quot;A&quot;] == 95
-    assert scores[&quot;C&quot;] == 90
-    assert scores[&quot;total&quot;] &gt; 80
-</code></pre>
-<h3>3.4 Weight Tuning</h3>
-<table>
-<thead>
-<tr>
-<th>Environment</th>
-<th>A</th>
-<th>B</th>
-<th>C</th>
-<th>D</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Production</strong></td>
-<td>0.35</td>
-<td>0.15</td>
-<td>0.30</td>
-<td>0.20</td>
-</tr>
-<tr>
-<td><strong>Staging</strong></td>
-<td>0.30</td>
-<td>0.20</td>
-<td>0.25</td>
-<td>0.25</td>
-</tr>
-<tr>
-<td><strong>Compliance‑Only</strong></td>
-<td>0.20</td>
-<td>0.10</td>
-<td>0.60</td>
-<td>0.10</td>
-</tr>
-</tbody>
-</table>
-<p>Weights can be overridden by placing a <code>weights.yaml</code> in the repository root and setting the <code>WEIGHTS_FILE</code> environment variable in the CI job.</p>
-<hr />
-<h2>4️⃣ Parsing Strategy &amp; Tooling (<code>parser.py</code>) <a name="parsing-strategy--tooling-parserpy"></a></h2>
-<h3>4.1 High‑Level Flow</h3>
-<ol>
-<li><strong>Load request JSON</strong> → validate (Section 1).  </li>
-<li><strong>Run spaCy NER + custom regex</strong> to extract key phrases (e.g., “99.999% uptime”).  </li>
-<li>**Map extracted</li>
-</ol>
+    types: [ opened, synchronize, reopened ]</p>
+<p>env:</p>
 <h2>📊 System Architecture Visual Map</h2>
 <div class="mermaid">
-flowchart TD
-start([Start]) --> A[1️⃣ Requirement Analysis]
-subgraph Req_Analysis["Requirement Analysis"]
-A --> A1{Gather Requirements}
-        A1 -->|Yes| A2[Stakeholder Interviews]
-A1 -->|No| A3[Market Research]
-A2 --> A4[Requirements Document]
-A3 --> A4
-        A4 --> B
+graph TD
+subgraph "Data Collection"
+PD[Public Datasets] --> AC[Data Acquisition]
+    PD2[Proprietary Data] --> AC
+    AD[Annotation & Labeling] --> AC
 end
-subgraph Sys_Design["System Design"]
-B --> B1{Define Architecture}
-        B1 -->|Monolithic| B2[Monolith Design]
-B1 -->|Microservices| B3[Microservices Design]
-B2 --> B4[Component Diagrams]
-B3 --> B4
-        B4 --> C
+subgraph "Data Processing"
+AC --> DC[Data Cleaning & Filtering]
+DC --> DV[Data Validation]
+DV --> TKN[Tokenization]
+TKN --> EMB[Embedding Generation]
 end
-subgraph Implementation["Implementation"]
-C --> C1{Choose Technology}
-        C1 -->|Java| C2[Java Module]
-C1 -->|Python| C3[Python Module]
-C2 --> C4[Code Review]
-C3 --> C4
-        C4 --> D
+subgraph "Model Development"
+AR[Transformer Architecture] --> PT[Pre‑training]
+PT --> FT[Fine‑tuning]
+FT --> EV["Evaluation (Perplexity, BLEU, Accuracy, etc.)"]
+PT --> OPT[Optimizer & Loss Function]
+OPT --> PT
+    EV --> HPT[Hyperparameter Tuning]
+HPT --> PT
 end
-subgraph Deployment_Maintenance["Deployment & Maintenance"]
-D --> D1{CI/CD Pipeline}
-        D1 -->|Success| D2[Production Deploy]
-D1 -->|Failure| D3[Rollback]
-D2 --> D4[Monitoring & Alerts]
-D3 --> D4
-        D4 --> end([End])
+subgraph "Deployment & Inference"
+MV[Model Versioning] --> DP[Deployment Pipeline]
+DP --> IE[Inference Engine]
+IE --> UI[User Interface]
+DP --> SC[Scaling & Infrastructure]
+DP --> SC2[Security & Compliance]
+DP --> MG[Monitoring & Logging]
 end
-classDef process fill:#e1f5fe,stroke:#0277bd,stroke-width:2px;
-class A,B,C,D process;
-classDef decision fill:#ffebee,stroke:#c62828,stroke-width:2px;
-class A1,B1,C1,D1 decision;
-classDef endNode fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px;
-class start,end endNode;
+subgraph "Feedback Loop"
+UI --> UF[User Feedback & Error Reports]
+UF --> DA[Data Augmentation]
+DA --> AC
+    UF --> MG
+end
 </div>
 </article>
 
